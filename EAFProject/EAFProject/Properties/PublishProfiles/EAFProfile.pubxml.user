@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Integrations\EAFProjectDeploy</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/EAFProject.dll">
+      <publishTime>12/13/2016 11:39:00</publishTime>
+    </File>
+    <File Include="bin/Microsoft.CSharp.dll">
+      <publishTime>07/09/2012 00:40:08</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>12/11/2016 13:36:25</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Mvc.FixedDisplayModes.dll">
+      <publishTime>12/11/2016 13:36:20</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>12/11/2016 13:36:27</publishTime>
+    </File>
+    <File Include="bin/System.ComponentModel.DataAnnotations.dll">
+      <publishTime>07/09/2012 00:40:08</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>12/11/2016 13:36:22</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.WebRequest.dll">
+      <publishTime>07/09/2012 00:40:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.Abstractions.dll">
+      <publishTime>07/09/2012 00:40:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.ApplicationServices.dll">
+      <publishTime>07/09/2012 00:40:10</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>12/11/2016 13:36:23</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>12/11/2016 13:36:22</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>12/11/2016 13:36:22</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>12/11/2016 13:36:20</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>12/11/2016 13:36:21</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>12/11/2016 13:36:23</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>12/11/2016 13:36:23</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>12/11/2016 13:36:23</publishTime>
+    </File>
+    <File Include="favicon.png">
+      <publishTime>12/11/2016 13:36:11</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>12/11/2016 13:36:11</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>12/11/2016 13:36:12</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.12.4.min.js">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.8.0.js">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.8.0.min.js">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui-timepicker-addon.min.js">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui.min.js">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.js">
+      <publishTime>12/11/2016 13:36:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.min.js">
+      <publishTime>12/11/2016 13:36:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.js">
+      <publishTime>12/11/2016 13:36:16</publishTime>
+    </File>
+    <File Include="Scripts/jquery.validate.unobtrusive.min.js">
+      <publishTime>12/11/2016 13:36:16</publishTime>
+    </File>
+    <File Include="Scripts/multiselect.js">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Scripts/multiselect.min.js">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Styles/FontAwesomeMin.css">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Styles/jquery-ui-timepicker-addon.min.css">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Styles/JQueryUi.css">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Styles/style.css">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Styles/W3.css">
+      <publishTime>12/11/2016 13:36:17</publishTime>
+    </File>
+    <File Include="Views/Candidate/AddCandidate.cshtml">
+      <publishTime>12/11/2016 13:36:18</publishTime>
+    </File>
+    <File Include="Views/Candidate/GetCandidates.cshtml">
+      <publishTime>12/12/2016 16:36:52</publishTime>
+    </File>
+    <File Include="Views/Candidate/Interview.cshtml">
+      <publishTime>12/11/2016 13:36:18</publishTime>
+    </File>
+    <File Include="Views/CreateRequest/NewHire.cshtml">
+      <publishTime>12/13/2016 10:24:53</publishTime>
+    </File>
+    <File Include="Views/DisplayRequest/Index.cshtml">
+      <publishTime>12/12/2016 21:26:19</publishTime>
+    </File>
+    <File Include="Views/DisplayRequest/Index1.cshtml">
+      <publishTime>12/13/2016 11:38:05</publishTime>
+    </File>
+    <File Include="Views/DisplayRequest/Search.cshtml">
+      <publishTime>12/11/2016 13:36:18</publishTime>
+    </File>
+    <File Include="Views/Login/Index.cshtml">
+      <publishTime>12/12/2016 14:24:08</publishTime>
+    </File>
+    <File Include="Views/MyTeam/AddTeam.cshtml">
+      <publishTime>12/12/2016 16:38:05</publishTime>
+    </File>
+    <File Include="Views/MyTeam/Index.cshtml">
+      <publishTime>12/12/2016 16:36:24</publishTime>
+    </File>
+    <File Include="Views/MyTeam/MyTeamDetails.cshtml">
+      <publishTime>12/12/2016 16:38:20</publishTime>
+    </File>
+    <File Include="Views/MyTeam/MyTeamEdit.cshtml">
+      <publishTime>12/12/2016 16:38:27</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>12/11/2016 13:36:18</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>12/13/2016 10:26:53</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

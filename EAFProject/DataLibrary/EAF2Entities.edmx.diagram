@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fddb4243bfb249489f7e0076619ca9b4" Name="Diagram1">
+        <EntityTypeShape EntityType="EAF2Model.Candidate" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.CandidateMapping" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.Dept" Width="1.5" PointX="1.5" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.Emp" Width="1.5" PointX="1.5" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.Interview" Width="1.5" PointX="0.75" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.JobTitle" Width="1.5" PointX="1.5" PointY="24.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.Product" Width="1.5" PointX="1.5" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.RequestedSkill" Width="1.5" PointX="8.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.Request" Width="1.5" PointX="6" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.SkillInfo" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.Status" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.sysdiagram" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.InterviewComment" Width="1.5" PointX="3.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.Rating" Width="1.5" PointX="8.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EAF2Model.RequestComment" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="EAF2Model.FK_CandidateMapping_Candidate" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_CandidateMapping_Interviews" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_CandidateMapping_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK__Requests__DepartmentId" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Emp_Dept" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Emp_JobTitle" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Emp_Manager" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Emp_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_InterviewComments_Emp" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Interviews_Emp" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_RequestComments_Emp" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_InterviewComments_Interviews" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Ratings_Interviews" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK__Requests__jobid" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Requests_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_RequestedSkills_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_RequestedSkills_SkillInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK__Requests__Status" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_RequestComments_Requests" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.FK_Ratings_SkillInfo" ManuallyRouted="false" />
+        <AssociationConnector Association="EAF2Model.RequestedCandidates" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

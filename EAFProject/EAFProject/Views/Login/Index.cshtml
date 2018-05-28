@@ -1,0 +1,80 @@
+﻿@model EAFProject.ViewModels.LoginCredentials
+@{
+    //swg = "Carl";
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript">//
+    var onSuccess = function (result) {
+        if (result.url) {
+            // if the server returned a JSON object containing an url
+            // property we redirect the browser to that url
+            window.location.href = result.url;
+        }
+    }
+</script>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Styles/FontAwesomeMin.css" rel="stylesheet" />
+    <link href="~/Styles/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+    <link href="~/Styles/JQueryUi.css" rel="stylesheet" />
+    <link href="~/Styles/style.css" rel="stylesheet" />
+    <link href="~/Styles/W3.css" rel="stylesheet" />
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-teal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="~/Styles/W3.css" rel="stylesheet" />
+    <link href="~/Styles/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.8.0.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="w3-container w3-theme w3-padding" id="myHeader">
+
+        <div class="w3-center">
+            <h1 class="w3-xxxlarge w3-animate-bottom">EAF</h1>
+
+        </div>
+    </header>
+
+    <div class="w3-display-container w3-padding w3-display-middle" style="width: 400px; min-height: 400px">
+
+        @Ajax.BeginForm("LoginError", "Login",
+         new AjaxOptions
+         {
+             HttpMethod = "POST",
+             UpdateTargetId = "div1",
+             InsertionMode = InsertionMode.Replace,
+             OnSuccess = "onSuccess"
+
+             //,
+             //LoadingElementId = "waitimage"
+         });
+        <div class="w3-group">
+            @Html.EditorFor(model => model.swg)
+            <div id="div1">
+            </div>
+            <br>
+            <label class="w3-label w3-validate">Username</label>
+        </div>
+        
+        <input type="submit" class="w3-btn-block w3-theme w3-border w3-half" style="width: 150px" value="Login" />
+
+        @{Html.EndForm();}
+    </div>
+</body>
+</html>

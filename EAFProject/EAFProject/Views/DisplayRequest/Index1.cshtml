@@ -1,0 +1,457 @@
+﻿@model IEnumerable<EAFProject.BusinessComponents.RequestData>
+@{
+    ViewBag.Title = "Index1";
+}
+@using EAFProject.Controllers
+@using EAFProject.DatabaseController
+@using EAFProject.BusinessComponents
+
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link href="~/Styles/W3.css" rel="stylesheet" />
+<body>
+
+    <div class="w3-half">
+        <nav class="w3-sidenav w3-white w3-card-2" style="display: none" id="mySidenav">
+            <a href="javascript:void(0)" onclick="w3_close()"
+                class="w3-closenav w3-large">Menu</a>
+            @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+            {
+                <a onclick="location.href='@Url.Action("Index", "MyTeam")'">My Team</a>
+            }
+            @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+            {
+                <a onclick="location.href='@Url.Action("HRRequest", "DisplayHRRequests")'">My Requests</a>
+            }
+            @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+            {
+                <a onclick="location.href='@Url.Action("Index", "DisplayRequest")'">My Requests</a>
+            }
+            @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+            {
+                <div class="w3-accordion">
+                    <a onclick="location.href='@Url.Action("NewHire", "CreateRequest")'">Raise a Request </a>
+                </div>
+            }
+            @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+            {
+                <a onclick="location.href='@Url.Action("PendingResult", "DisplayPending")'">Pending</a>
+            }
+        </nav>
+    </div>
+
+    <header class="w3-container w3-teal">
+        <span class="w3-opennav w3-xlarge" onclick="w3_open()">&#9776;</span>
+        <h1>Request Details</h1>
+    </header>
+
+
+
+    <hr>
+    <div class="w3-container w3-group">
+        <div class="w3-border">
+            <ul class="w3-navbar w3-light-grey">
+                <li><a class="w3-btn testbtn w3-border" onclick="location.href='@Url.Action("Index1", "DisplayRequest", new { ReqId = ViewBag.ReqId })';return false">Request Detail</a></li>
+
+                <li><a class="w3-btn testbtn w3-border" onclick="location.href='@Url.Action("GetCandidates", "Candidate", new { ReqId = ViewBag.ReqId })';return false">Candidates</a></li>
+
+            </ul>
+
+            <div id="rd" class="w3-container city w3-animate-opacity">
+                <h2>Request Detail</h2>
+
+                <div class="w3-row w3-border">
+                    <div class="w3-padding w3-margin-top">
+                        <form class="w3-container w3-card-4 w3-border" method="post">
+
+
+
+
+                            @foreach (var item in Model)
+                            {
+                                @Html.HiddenFor(modelItem => item.ReqId)
+                                @Html.HiddenFor(modelItem => item.SWGId)
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.ReqId)
+                                    </span>
+                                    <label class="w3-label w3-validate">Request Id</label>
+                                </div>
+
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.ReqType)
+                                    </span>
+                                    <label class="w3-label w3-validate">Type</label>
+                                </div>
+
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.JobTitle, new { @class = "form-control" })
+                                    </span>
+                                    <label class="w3-label w3-validate">Designation</label>
+                                </div>
+                                
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.ProductName)
+                                    </span>
+                                    <label class="w3-label w3-validate">Product</label>
+                                </div>
+                                
+                                if (item.CreatedByEmpId != item.SWGId)
+                                {
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.CreatedByName)
+                                    </span>
+                                    <label class="w3-label w3-validate">Created By</label>
+                                </div>
+                                }
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.vacancies)
+                                    </span>
+                                    <label class="w3-label w3-validate">Vacancies</label>
+                                </div>
+
+                                
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @if (item.criticality == 1)
+                                        {
+                                            <label>Normal</label>
+                                        }
+                                        else if (item.criticality == 2)
+                                        {
+                                            <label>Urgent</label>
+                                        }
+                                    </span>
+                                    <label class="w3-label w3-validate">Criticality</label>
+                                </div>
+                                
+                                
+                               
+                                        if (String.IsNullOrEmpty(item.HRName) == false)
+                                        { <div class="w3-group w3-label">
+                                            <span class="w3-input">
+                                                @Html.DisplayFor(modelItem => item.HRName)
+                                            </span>
+                                            <label class="w3-label w3-validate">Assigned To</label>
+                                        </div>
+                                        }
+                                       
+
+
+                                
+                                <div class="w3-group w3-label" hidden>
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.minEstimatedCTC)
+                                    </span>
+                                    <label class="w3-label w3-validate">Minimum CTC</label>
+                                </div>
+                                
+                                <div class="w3-group w3-label" hidden>
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.EstimatedCTC)
+                                    </span>
+                                    <label class="w3-label w3-validate">Maximum CTC</label>
+
+                                </div>
+
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                    </span>
+                                    <label class="w3-label w3-validate">Created Date</label>
+                                </div>
+                                
+                                        if (item.ReqType == "Replacement")
+                                        {
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.ReplacementFor)
+                                    </span>
+                                    <label class="w3-label w3-validate">Replacement For</label>
+                                </div>
+                                        }
+
+                                        if (item.ReqType == "Internal Hire")
+                                        {
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.FromManagerName)
+                                    </span>
+                                    <label class="w3-label w3-validate">From Manager</label>
+                                </div>
+                                
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.FromDeptName)
+                                    </span>
+                                    <label class="w3-label w3-validate">From Department</label>
+                                </div>
+                                
+                                <div class="w3-group w3-label">
+                                    <span class="w3-input">
+                                        @Html.DisplayFor(modelItem => item.FromProductName)
+                                    </span>
+                                    <label class="w3-label w3-validate">From Product</label>
+                                </div>
+                                        }
+
+                                
+                                
+                                <div class="w3-container w3-group ">
+                                    <div class="w3-responsive">
+                                        <table class="w3-table w3-bordered w3-striped w3-hoverable">
+                                            <tr>
+                                                <th class="w3-label">Essential Skills</th>
+                                                <th class="w3-label">Desired Skills</th>
+                                                <th class="w3-label">Optional Skills</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @foreach (var item1 in item.EssentialSkills)
+                                                    {
+                                                        
+
+                                                        @Html.DisplayFor(modelItem => item1)<br>
+                                                        
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @foreach (var item1 in item.DesiredSkills)
+                                                    {
+                                                        
+                                                        @Html.DisplayFor(modelItem => item1)<br>
+                                                        
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @foreach (var item1 in item.OptionalSkills)
+                                                    {
+                                                        
+                                                        @Html.DisplayFor(modelItem => item1)<br>
+                                                        
+                                                    }</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <br>
+                                
+
+                                <div class="w3-container w3-group">
+                                    <div class="w3-responsive">
+                                        <table class="w3-table w3-bordered w3-striped w3-hoverable">
+                                            <tr>
+                                                <th class="w3-label">Reviewed By</th>
+                                                <th class="w3-label">Date & Time</th>
+                                                <th class="w3-label">Comments</th>
+                                                <th class="w3-label">Status</th>
+                                            </tr>
+
+                                            <tr>
+
+                                                <td>
+
+                                                    @foreach (var item1 in item.ReviewedBy)
+                                                    {
+                                                           
+                                                        @Html.DisplayFor(modelItem => item1)<br>
+                                                                
+                                                    }
+
+                                                </td>
+
+
+                                                <td>
+
+
+                                                    @foreach (var item1 in item.LastReviewedDate)
+                                                    {
+                                                            
+                                                        @Html.DisplayFor(modelItem => item1)<br>
+                                                                
+                                                    }
+
+
+                                                </td>
+                                                <td>
+
+                                                    @foreach (var item1 in item.ReviewedComments)
+                                                    {
+                                                            
+                                                        @Html.DisplayFor(modelItem => item1)<br>
+                                                                
+                                                    }
+
+
+                                                </td>
+                                                <td>
+
+                                                    @foreach (var item1 in item.ReviewedStatus)
+                                                    {
+                                                            
+                                                        @Html.DisplayFor(modelItem => item1)<br>
+                                                                
+                                                    }
+
+
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                    
+                                                    if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+                                                    {
+                                                        if (item.Status != 4)
+                                                        {
+                                <div>
+                                    @Html.DropDownListFor(modelItem => item.HRName, new SelectList(ViewBag.HRList, "EmpId", "EmpName"), "Select")
+                                    @Html.ValidationMessageFor(modelItem => item.HRName)
+                                    <br />
+                                    <label class="w3-label w3-validate">Assign To</label>
+                                </div>
+                                <br />
+                                                        }
+                                                    }
+                                
+                                
+                                <br>
+                                <div class="w3-row">
+                                    <div class="w3-row">
+
+                                        <div class="w3-row">
+                                            @if (item.Status != 4 && item.Status != 6)
+                                            {
+                                                @Html.TextAreaFor(modelItem => item.InputComments, new { cols = 50, @rows = 4, @class = "w3-input w3-border" })
+                                                <label class="w3-validate w3-label">Comments</label>
+                                            }
+                                        </div>
+                                        @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+                                        {
+                                            if (item.Status != 4)
+                                            {
+                                            <input class="w3-btn w3-teal" type="submit" value="Processing" name="action:Processing" />
+                                            }
+                                        }
+
+
+                                        @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+                                        {
+                                            if (item.vacancies <= item.hiredNumberCandidate)
+                                            {
+                                                if (item.Status != 6)
+                                                {
+                                            <input class="w3-btn w3-teal" type="submit" value="Complete" name="action:Complete" /> 
+                                                }
+                                            }
+                                            if ((item.CreatedByEmpId == System.Web.HttpContext.Current.Session["swgId"].ToString()))
+                                            {
+                                                if ((item.Status) == 7 && (item.Status != 6))
+                                                {
+                                            <input class="w3-btn w3-teal" type="submit" value="Resubmit" name="action:Resubmit" />
+                                                }
+                                            }
+                                            if ((item.Status != 7) && (item.Status != 6))
+                                            {
+                                                if ((item.CreatedByEmpId != System.Web.HttpContext.Current.Session["swgId"].ToString()))
+                                                {
+                                            <input class="w3-btn w3-teal" type="submit" value="Approve" name="action:Approve" />
+                                                    if (item.Status != 5)
+                                                    {
+                                            <input class="w3-btn w3-teal" type="submit" value="On Hold" name="action:OnHold" />
+                                                    }
+                                                }
+
+                                                if (item.Status != 4)
+                                                {
+                                            <input class="w3-btn w3-teal" type="submit" value="Cancel" name="action:Cancel" />
+                                                }
+                                            }
+                                        }
+
+
+
+
+
+                                        <button class="w3-btn w3-teal" onclick="goBack()">Back</button>
+                                    </div>
+                                </div>
+
+
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <!--  -->
+    <!-- <footer class="w3-container w3-teal"> -->
+    <!--   <p>Copyright Aptean 2016</p> -->
+    <!-- </footer> -->
+
+    <script>
+
+        function w3_open() {
+            document.getElementById("mySidenav").style.display = "block";
+        }
+        function w3_close() {
+            document.getElementById("mySidenav").style.display = "none";
+        }
+        function goBack() {
+            window.history.back();
+        }
+        // Tabs
+        function openCity(evt, cityName) {
+            var i;
+            var x = document.getElementsByClassName("city");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            var activebtn = document.getElementsByClassName("testbtn");
+            for (i = 0; i < x.length; i++) {
+                activebtn[i].className = activebtn[i].className.replace(" w3-dark-grey", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " w3-dark-grey";
+        }
+
+        //var mybtn = document.getElementsByClassName("testbtn")[0];
+        //mybtn.click();
+
+        // Accordions
+        function myAccFunc(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+                x.previousElementSibling.className += " w3-dark-grey";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+                x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-dark-grey", "");
+            }
+        }
+        function myFunction() {
+            var x = document.getElementById("myTextarea").value;
+            document.getElementById("demo").innerHTML = x;
+        }
+
+    </script>
+
+</body>
+</html>
+

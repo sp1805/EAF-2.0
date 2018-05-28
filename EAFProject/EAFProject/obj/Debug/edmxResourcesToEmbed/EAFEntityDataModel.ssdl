@@ -1,0 +1,557 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EAF2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Candidate">
+    <Key>
+      <PropertyRef Name="TempId" />
+    </Key>
+    <Property Name="TempId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="bigint" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CandidateStatus" Type="varchar" MaxLength="50" />
+    <Property Name="resume" Type="varchar" MaxLength="50" />
+    <Property Name="interviewdatetime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CandidateMapping">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+    </Key>
+    <Property Name="CandiadteId" Type="int" Nullable="false" />
+    <Property Name="ReqId" Type="int" Nullable="false" />
+    <Property Name="InterviewId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Dept">
+    <Key>
+      <PropertyRef Name="DeptId" />
+    </Key>
+    <Property Name="DeptId" Type="int" Nullable="false" />
+    <Property Name="DeptName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Emp">
+    <Key>
+      <PropertyRef Name="SWG" />
+    </Key>
+    <Property Name="SWG" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="JobId" Type="int" Nullable="false" />
+    <Property Name="DeptId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="ManagerId" Type="varchar" MaxLength="50" />
+    <Property Name="DOJ" Type="date" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="DOR" Type="date" />
+    <Property Name="DOL" Type="date" />
+    <Property Name="DOO" Type="date" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EAF2.dbo.InterviewComments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="InterviewComments">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="comments" />
+      <PropertyRef Name="interviewstatus" />
+    </Key>
+    <Property Name="InterviewId" Type="int" Nullable="false" />
+    <Property Name="EmpId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="comments" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="datetime" Type="datetime" />
+    <Property Name="interviewstatus" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Interviews">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+    </Key>
+    <Property Name="InterviewId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InterviewerId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="JobId" />
+    </Key>
+    <Property Name="JobId" Type="int" Nullable="false" />
+    <Property Name="JobTitle" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EAF2.dbo.Ratings' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Ratings">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+      <PropertyRef Name="SkillId" />
+      <PropertyRef Name="Ratings" />
+    </Key>
+    <Property Name="InterviewId" Type="int" Nullable="false" />
+    <Property Name="SkillId" Type="int" Nullable="false" />
+    <Property Name="Ratings" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EAF2.dbo.RequestComments' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="RequestComments">
+    <Key>
+      <PropertyRef Name="ReqId" />
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="comments" />
+      <PropertyRef Name="statusId" />
+    </Key>
+    <Property Name="ReqId" Type="int" Nullable="false" />
+    <Property Name="EmpId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="comments" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="datetime" Type="datetime" />
+    <Property Name="statusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RequestedCandidates">
+    <Key>
+      <PropertyRef Name="CandidateId" />
+    </Key>
+    <Property Name="ReqId" Type="int" Nullable="false" />
+    <Property Name="CandidateId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RequestedSkills">
+    <Key>
+      <PropertyRef Name="ReqId" />
+      <PropertyRef Name="SkillId" />
+    </Key>
+    <Property Name="ReqId" Type="int" Nullable="false" />
+    <Property Name="SkillId" Type="int" Nullable="false" />
+    <Property Name="SkillType" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="ReqId" />
+    </Key>
+    <Property Name="ReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Criticality" Type="int" Nullable="false" />
+    <Property Name="CostEstimated" Type="int" />
+    <Property Name="CostActual" Type="int" />
+    <Property Name="RequestType" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CreatedByEmpId" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="date" Nullable="false" />
+    <Property Name="LastModifiedDate" Type="date" Nullable="false" />
+    <Property Name="AssignedTo" Type="varchar" MaxLength="50" />
+    <Property Name="Vacancies" Type="int" Nullable="false" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="minexperience" Type="int" />
+    <Property Name="mineducation" Type="varchar" MaxLength="50" />
+    <Property Name="DepartmentId" Type="int" Nullable="false" />
+    <Property Name="ReplacementFor" Type="varchar" MaxLength="50" />
+    <Property Name="FromProductId" Type="int" />
+    <Property Name="FromDepartmentId" Type="int" />
+    <Property Name="FromManagerId" Type="varchar" MaxLength="50" />
+    <Property Name="jobid" Type="int" />
+    <Property Name="minCostEstimated" Type="int" />
+  </EntityType>
+  <EntityType Name="SkillInfo">
+    <Key>
+      <PropertyRef Name="SkillId" />
+    </Key>
+    <Property Name="SkillId" Type="int" Nullable="false" />
+    <Property Name="SkillName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="StatusValue" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Requests__DepartmentId">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="DepartmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Requests__jobid">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="JobId" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="jobid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Requests__Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CandidateMapping_Candidate">
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="1" />
+    <End Role="CandidateMapping" Type="Self.CandidateMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Candidate">
+        <PropertyRef Name="TempId" />
+      </Principal>
+      <Dependent Role="CandidateMapping">
+        <PropertyRef Name="CandiadteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CandidateMapping_Interviews">
+    <End Role="Interviews" Type="Self.Interviews" Multiplicity="1" />
+    <End Role="CandidateMapping" Type="Self.CandidateMapping" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Interviews">
+        <PropertyRef Name="InterviewId" />
+      </Principal>
+      <Dependent Role="CandidateMapping">
+        <PropertyRef Name="InterviewId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CandidateMapping_Requests">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="CandidateMapping" Type="Self.CandidateMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ReqId" />
+      </Principal>
+      <Dependent Role="CandidateMapping">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Emp_Dept">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Emp" Type="Self.Emp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="Emp">
+        <PropertyRef Name="DeptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Emp_JobTitle">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+    <End Role="Emp" Type="Self.Emp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JobTitle">
+        <PropertyRef Name="JobId" />
+      </Principal>
+      <Dependent Role="Emp">
+        <PropertyRef Name="JobId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Emp_Manager">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="0..1" />
+    <End Role="Emp1" Type="Self.Emp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Emp">
+        <PropertyRef Name="SWG" />
+      </Principal>
+      <Dependent Role="Emp1">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Emp_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Emp" Type="Self.Emp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="Emp">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InterviewComments_Emp">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="1" />
+    <End Role="InterviewComments" Type="Self.InterviewComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Emp">
+        <PropertyRef Name="SWG" />
+      </Principal>
+      <Dependent Role="InterviewComments">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InterviewComments_Interviews">
+    <End Role="Interviews" Type="Self.Interviews" Multiplicity="1" />
+    <End Role="InterviewComments" Type="Self.InterviewComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Interviews">
+        <PropertyRef Name="InterviewId" />
+      </Principal>
+      <Dependent Role="InterviewComments">
+        <PropertyRef Name="InterviewId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Interviews_Emp">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="1" />
+    <End Role="Interviews" Type="Self.Interviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Emp">
+        <PropertyRef Name="SWG" />
+      </Principal>
+      <Dependent Role="Interviews">
+        <PropertyRef Name="InterviewerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ratings_Interviews">
+    <End Role="Interviews" Type="Self.Interviews" Multiplicity="1" />
+    <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Interviews">
+        <PropertyRef Name="InterviewId" />
+      </Principal>
+      <Dependent Role="Ratings">
+        <PropertyRef Name="InterviewId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ratings_SkillInfo">
+    <End Role="SkillInfo" Type="Self.SkillInfo" Multiplicity="1" />
+    <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SkillInfo">
+        <PropertyRef Name="SkillId" />
+      </Principal>
+      <Dependent Role="Ratings">
+        <PropertyRef Name="SkillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestComments_Emp">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="1" />
+    <End Role="RequestComments" Type="Self.RequestComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Emp">
+        <PropertyRef Name="SWG" />
+      </Principal>
+      <Dependent Role="RequestComments">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestComments_Requests">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="RequestComments" Type="Self.RequestComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ReqId" />
+      </Principal>
+      <Dependent Role="RequestComments">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestedCandidates_Candidate">
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="1" />
+    <End Role="RequestedCandidates" Type="Self.RequestedCandidates" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Candidate">
+        <PropertyRef Name="TempId" />
+      </Principal>
+      <Dependent Role="RequestedCandidates">
+        <PropertyRef Name="CandidateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestedCandidates_Requests">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="RequestedCandidates" Type="Self.RequestedCandidates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ReqId" />
+      </Principal>
+      <Dependent Role="RequestedCandidates">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestedSkills_Requests">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="RequestedSkills" Type="Self.RequestedSkills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ReqId" />
+      </Principal>
+      <Dependent Role="RequestedSkills">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestedSkills_SkillInfo">
+    <End Role="SkillInfo" Type="Self.SkillInfo" Multiplicity="1" />
+    <End Role="RequestedSkills" Type="Self.RequestedSkills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SkillInfo">
+        <PropertyRef Name="SkillId" />
+      </Principal>
+      <Dependent Role="RequestedSkills">
+        <PropertyRef Name="SkillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EAF2ModelStoreContainer">
+    <EntitySet Name="Candidate" EntityType="Self.Candidate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CandidateMapping" EntityType="Self.CandidateMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dept" EntityType="Self.Dept" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Emp" EntityType="Self.Emp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Interviews" EntityType="Self.Interviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JobTitle" EntityType="Self.JobTitle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestedCandidates" EntityType="Self.RequestedCandidates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestedSkills" EntityType="Self.RequestedSkills" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SkillInfo" EntityType="Self.SkillInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InterviewComments" EntityType="Self.InterviewComments" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [InterviewComments].[InterviewId] AS [InterviewId], 
+    [InterviewComments].[EmpId] AS [EmpId], 
+    [InterviewComments].[comments] AS [comments], 
+    [InterviewComments].[datetime] AS [datetime], 
+    [InterviewComments].[interviewstatus] AS [interviewstatus]
+    FROM [dbo].[InterviewComments] AS [InterviewComments]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Ratings" EntityType="Self.Ratings" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Ratings].[InterviewId] AS [InterviewId], 
+    [Ratings].[SkillId] AS [SkillId], 
+    [Ratings].[Ratings] AS [Ratings]
+    FROM [dbo].[Ratings] AS [Ratings]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="RequestComments" EntityType="Self.RequestComments" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [RequestComments].[ReqId] AS [ReqId], 
+    [RequestComments].[EmpId] AS [EmpId], 
+    [RequestComments].[comments] AS [comments], 
+    [RequestComments].[datetime] AS [datetime], 
+    [RequestComments].[statusId] AS [statusId]
+    FROM [dbo].[RequestComments] AS [RequestComments]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Requests__DepartmentId" Association="Self.FK__Requests__DepartmentId">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__jobid" Association="Self.FK__Requests__jobid">
+      <End Role="JobTitle" EntitySet="JobTitle" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__Status" Association="Self.FK__Requests__Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CandidateMapping_Candidate" Association="Self.FK_CandidateMapping_Candidate">
+      <End Role="Candidate" EntitySet="Candidate" />
+      <End Role="CandidateMapping" EntitySet="CandidateMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CandidateMapping_Interviews" Association="Self.FK_CandidateMapping_Interviews">
+      <End Role="Interviews" EntitySet="Interviews" />
+      <End Role="CandidateMapping" EntitySet="CandidateMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CandidateMapping_Requests" Association="Self.FK_CandidateMapping_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="CandidateMapping" EntitySet="CandidateMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Dept" Association="Self.FK_Emp_Dept">
+      <End Role="Dept" EntitySet="Dept" />
+      <End Role="Emp" EntitySet="Emp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_JobTitle" Association="Self.FK_Emp_JobTitle">
+      <End Role="JobTitle" EntitySet="JobTitle" />
+      <End Role="Emp" EntitySet="Emp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Manager" Association="Self.FK_Emp_Manager">
+      <End Role="Emp" EntitySet="Emp" />
+      <End Role="Emp1" EntitySet="Emp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Product" Association="Self.FK_Emp_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Emp" EntitySet="Emp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InterviewComments_Emp" Association="Self.FK_InterviewComments_Emp">
+      <End Role="Emp" EntitySet="Emp" />
+      <End Role="InterviewComments" EntitySet="InterviewComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InterviewComments_Interviews" Association="Self.FK_InterviewComments_Interviews">
+      <End Role="Interviews" EntitySet="Interviews" />
+      <End Role="InterviewComments" EntitySet="InterviewComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Interviews_Emp" Association="Self.FK_Interviews_Emp">
+      <End Role="Emp" EntitySet="Emp" />
+      <End Role="Interviews" EntitySet="Interviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ratings_Interviews" Association="Self.FK_Ratings_Interviews">
+      <End Role="Interviews" EntitySet="Interviews" />
+      <End Role="Ratings" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ratings_SkillInfo" Association="Self.FK_Ratings_SkillInfo">
+      <End Role="SkillInfo" EntitySet="SkillInfo" />
+      <End Role="Ratings" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestComments_Emp" Association="Self.FK_RequestComments_Emp">
+      <End Role="Emp" EntitySet="Emp" />
+      <End Role="RequestComments" EntitySet="RequestComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestComments_Requests" Association="Self.FK_RequestComments_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="RequestComments" EntitySet="RequestComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestedCandidates_Candidate" Association="Self.FK_RequestedCandidates_Candidate">
+      <End Role="Candidate" EntitySet="Candidate" />
+      <End Role="RequestedCandidates" EntitySet="RequestedCandidates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestedCandidates_Requests" Association="Self.FK_RequestedCandidates_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="RequestedCandidates" EntitySet="RequestedCandidates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestedSkills_Requests" Association="Self.FK_RequestedSkills_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="RequestedSkills" EntitySet="RequestedSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestedSkills_SkillInfo" Association="Self.FK_RequestedSkills_SkillInfo">
+      <End Role="SkillInfo" EntitySet="SkillInfo" />
+      <End Role="RequestedSkills" EntitySet="RequestedSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Product" Association="Self.FK_Requests_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

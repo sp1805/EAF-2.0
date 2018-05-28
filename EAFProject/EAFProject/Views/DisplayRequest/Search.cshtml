@@ -1,0 +1,132 @@
+﻿@model EAFProject.ViewModels.SearchBar
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<link href="~/Styles/W3.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@*<link rel="stylesheet" href="/resources/demos/style.css">*@
+<div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width: 400px;height:300px">
+    <span onclick="document.getElementById('searchdiv').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-8 w3-display-topright " title="Close Modal">&times;</span>
+    <div class="w3-center">
+        <br>
+    </div>
+
+    <form id="searchSubmitForm" class="w3-container" method="post" >
+        @Html.HiddenFor(model =>model.SearchBy, new {@id="searchByhidden" })
+        @Html.HiddenFor(model =>model.SearchFor, new {@id="searchForhidden" })
+        <input type="submit" name="action:Search" value="Submit" style="display:none;" id="searchSubmitFormButton">
+        </form>
+        <div class="w3-section w3-margin">
+            <div class="w3-group">
+                <select class="w3-select" name="SearchBy" id="SearchBy">
+                    <option value="reqId" selected>Request Id</option>
+                    <option value="approvedBy">Approved By</option>
+                    <option value="createdByEmpId">Created By</option>
+                    <option value="createdDate">Created Date</option>
+                    <option value="criticality">Criticality</option>
+                    <option value="departmentid">Department</option>
+                    <option value="jobid">Designation</option>
+                    <option value="Productid">Product Name</option>
+                    <option value="status">Status</option>
+                </select>
+                <label class="w3-label ">Search By</label>
+            </div>
+
+            <div class="w3-group" id="reqIdDiv">
+                    @Html.TextBox("reqId", null,new { @class = "w3-input w3-border",@id="reqId" })
+                <br />
+                     <label class="w3-label w3-validate">Search For</label>
+                </div>
+
+                        <div class="w3-group" id="approvedByDiv" style="display:none;">
+            @Html.DropDownList("approvedBy", new SelectList(ViewBag.ManagerList, "EmpId", "EmpName"), "Select", new {  @id="approvedBy"})
+<br />
+                <label class="w3-label">Search For</label>
+                </div>
+
+            <div class="w3-group" id="createdByEmpIdDiv" style="display:none;">
+            @Html.DropDownList("createdByEmpId", new SelectList(ViewBag.ManagerList, "EmpId", "EmpName"), "Select", new {  @id="createdByEmpId"})
+                <br />
+                <label class="w3-label">Search For</label>
+                </div>
+
+            <div id="createdDateDiv" style="display:none;">
+            @Html.TextBox("createdDate", null,new { @class = "form-control doc w3-input",@id="createdDate" })
+                <br />
+                <label class="w3-label w3-validate">Created Date</label>
+                </div>
+
+              <div class="w3-group" id="criticalityDiv" style="display:none;">
+            @Html.DropDownList("criticality", (IEnumerable<SelectListItem>)ViewBag.Criticality,"Select", new { @id = "criticality"})
+                  <br />
+                <label class="w3-label w3-validate">Search For</label>
+                </div>
+            
+            <div class="w3-group" id="departmentidDiv" style="display:none;">
+            @Html.DropDownList("departmentid", new SelectList(ViewBag.Department, "DeptId", "DeptName"), "Select", new {  @id="departmentid"})
+                <br />
+                <label class="w3-label w3-validate">Search For</label>
+                </div>
+
+            <div class="w3-group" id="jobidDiv" style="display:none;">
+            @Html.DropDownList("jobid", new SelectList(ViewBag.Designation, "JobID", "JobName"), "Select", new {  @id="jobid"})
+                <br />
+                <label class="w3-label w3-validate">Search For</label>
+                </div>
+
+            <div class="w3-group" id="ProductidDiv" style="display:none;">
+            @Html.DropDownList("productid", new SelectList(ViewBag.ProductName, "ProductId", "ProductTitle"), "Select", new {  @id="Productid"})
+                <br />
+                <label class="w3-label w3-validate">Search For</label>
+                </div>
+
+                        <div class="w3-group" id="statusDiv" style="display:none;">
+             @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.Status,"Select", new { @id = "status"})
+                            <br />
+                <label class="w3-label w3-validate">Search For</label>
+                </div>
+
+            <button id="searchButton" class="w3-btn-block w3-teal">Search</button>
+
+
+        </div>
+    
+
+</div>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#SearchBy").change(function () {
+
+
+            $('div[id$="Div"]').hide();
+            $("#" + $(this).val() + "Div").show();
+
+
+        });
+
+        $("#searchButton").click(function () {
+            $("#searchByhidden").val($("#SearchBy").val());
+            $('div[id$="Div"]').each(function () {
+                if ("none" != $(this).css("display")) {
+                    $("#searchForhidden").val($(this).children().first().val());
+                }
+            });
+
+
+            $("#searchSubmitFormButton").click();
+            return false;
+        });
+    });
+    $(function () {
+        $("#createdDate").datepicker({
+            changeMonth: true,
+            changeYear: true
+            //dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>

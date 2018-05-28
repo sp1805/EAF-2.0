@@ -1,0 +1,229 @@
+﻿@model EAFProject.Models.EmployeeClass
+@{
+    ViewBag.Title = "AddTeam";
+}
+<!DOCTYPE html>
+<link href="~/Styles/style.css" rel="stylesheet" />
+<link href="~/Styles/W3.css" rel="stylesheet" />
+<link href="~/Styles/JQueryUi.css" rel="stylesheet" />
+<link href="~/Styles/FontAwesomeMin.css" rel="stylesheet" />
+<body>
+    <nav class="w3-sidenav w3-white w3-card-2" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-closenav w3-large">Menu</a>
+     @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "MyTeam")'">My Team</a>
+     }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+    {
+        <a onclick="location.href='@Url.Action("HRRequest", "DisplayHRRequests")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "DisplayRequest")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+ <div class="w3-accordion">
+    <a onclick="location.href='@Url.Action("NewHire", "CreateRequest")'">Raise a Request </a>
+    </div>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("PendingResult", "DisplayPending")'">Pending</a>
+    }
+</nav>
+
+    <header class="w3-container w3-teal">
+        <span class="w3-opennav w3-xlarge" onclick="w3_open()">&#9776;</span>
+        <h1>Edit Team</h1>
+    </header>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Status))
+    {
+        <h2>Edited Successfully</h2>
+    }
+
+    <div class="w3-row">
+        <div class="w3-half w3-padding w3-margin-top">
+            <form class="w3-container w3-card-4" method="post">
+
+                <div class="w3-group">
+                    @Html.HiddenFor(model => model.swg)
+                    <input class="w3-input" type="text" disabled value=@Html.DisplayFor(model => model.swg)>
+                    @*@Html.TextBoxFor(model => model.swg,new {@class="w3-input required"})*@
+                    <label class="w3-label w3-validate">SWG Id<span></span></label>
+                </div>
+
+                <div class="w3-group">
+                    @Html.HiddenFor(model => model.manager)
+                    @*<input class="w3-input" type="text" disabled value=@Html.DisplayFor(model => model.manager)>*@
+                    @*@Html.TextBoxFor(model => model.swg,new {@class="w3-input required"})*@
+                    @*<label class="w3-label w3-validate">Manager Id<span></span></label>*@
+                </div>
+
+                <div class="w3-group">
+                    @Html.TextBoxFor(model => model.name, new { @class = "w3-input required",maxlength = "50" })
+                    <label class="w3-label w3-validate">Name<span style="color: red">*<br />@Html.ValidationMessageFor(model => model.name)</span></label>
+
+                </div>
+                <div class="w3-group">
+                    @Html.TextBoxFor(model => model.email, new { @class = "w3-input required email" })
+                    <label class="w3-label w3-validate">Email Id<span style="color: red">*<br />@Html.ValidationMessageFor(model => model.email)</span></label>
+                </div>
+
+                <div class="w3-group">
+                    @Html.DropDownListFor(model => model.jobId, new SelectList(ViewBag.JobList, "JobID", "JobName", ViewBag.JobID), "Select", new { @class = "w3-select required" })
+                    <label class="w3-label w3-validate">Job Title</label><span style="color: red">*</span>
+                </div>
+                <div class="w3-group">
+
+                    @Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.ProductList, "ProductId", "ProductTitle", ViewBag.Product), "Select", new { @class = "w3-select required" })
+                    <label class="w3-label w3-validate">Product</label><span style="color: red">*</span>
+                </div>
+                <div class="w3-group">
+
+                    @Html.DropDownListFor(model => model.DeptId, new SelectList(ViewBag.DeptList, "DeptId", "DeptName", ViewBag.DeptID), "Select", new { @class = "w3-select required" })
+                    <label class="w3-label w3-validate">Department</label><span style="color: red">*</span>
+                </div>
+
+
+
+
+                @*<div class="w3-group">
+
+        @Html.TextBoxFor(model => model.manager,new {@class="w3-input required"})
+    <label class="w3-label w3-validate">Manager Id</label><span style="color:red">*</span>
+		
+</div>*@
+
+                <div class="w3-group">
+
+                    @Html.TextBoxFor(model => model.dateOfJoining, "{0:MM/dd/yyyy}", new { @class = "form-control doj w3-input required" })
+                    <label class="w3-label w3-validate">Date of joining</label><span style="color: red">*</span>
+
+                </div>
+
+                <div class="w3-group">
+                    @Html.TextBoxFor(model => model.dateOfOffer, "{0:MM/dd/yyyy}", new { @class = "form-control doo w3-input" })
+                    <label class="w3-label w3-validate">Date of Offer</label>
+
+                </div>
+
+                <div class="w3-group">
+
+                    @Html.TextBoxFor(model => model.dateOfResignation, "{0:MM/dd/yyyy}", new { @class = "form-control dor w3-input" })
+                    <label class="w3-label w3-validate">Date of Resignation</label>
+
+                </div>
+
+                <div class="w3-group">
+
+                    @Html.TextBoxFor(model => model.lastDay, "{0:MM/dd/yyyy}", new { @class = "form-control dol w3-input" })
+                    <label class="w3-label w3-validate">Last day</label>
+
+                </div>
+
+
+                <button class="w3-btn w3-teal">Submit</button>
+                <button class="w3-btn w3-teal" onclick="location.href='@Url.Action("AddTeam", "MyTeam")'">Back</button>
+            </form>
+        </div>
+    </div>
+
+    <!--<footer class="w3-container w3-teal">
+ 
+</footer> -->
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(function () {
+            $(".doj").datepicker({
+                changeMonth: true,
+                changeYear: true
+                //dateFormat: 'yy-mm-dd'
+            });
+        });
+
+        $(function () {
+            $(".dor").datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+
+        $(function () {
+            $(".doo").datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+        });
+
+        $(function () {
+            $(".dol").datepicker({
+                changeMonth: true,
+                changeYear: true
+            });
+
+
+            $("button").click(function () {
+
+                var mandatoryfilled = true;
+                $(".required").each(function () {
+
+                    if ($(this).val() == "") {
+                        alert("Please fill mandatory fields");
+                        mandatoryfilled = false;
+                        return false;
+                    }
+                });
+                if (!mandatoryfilled) {
+
+                    return false;
+                } else {
+                    if (!isValidEmailAddress($(".email").val())) { alert("Please enter valid email address"); return false; }
+
+
+                }
+            });
+        });
+
+
+        $('#lastDay').blur(function () {
+            var n = $("#dateOfJoining").val();
+            var m = $("#lastDay").val();
+            if (parseInt(n) > parseInt(m)) {
+                alert("Last Date can't be less than Date Of Joining");
+            }
+        });
+       
+    </script>
+
+    <script>
+        function w3_open() {
+            document.getElementById("mySidenav").style.display = "block";
+        }
+        function w3_close() {
+            document.getElementById("mySidenav").style.display = "none";
+        }
+
+        // Accordions
+        function myAccFunc(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+                x.previousElementSibling.className += " w3-dark-grey";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+                x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-dark-grey", "");
+            }
+        }
+        function isValidEmailAddress(emailAddress) {
+            var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+            return emailReg.test(emailAddress);
+        }
+    </script>

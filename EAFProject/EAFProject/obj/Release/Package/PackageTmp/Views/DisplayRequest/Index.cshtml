@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "Index1";
+   
+}
+@using EAFProject.Models
+@using EAFProject.Controllers
+@using EAFProject.DatabaseController
+@using EAFProject.BusinessComponents
+
+<html>
+<title>My Requests</title>
+<link href="~/Styles/W3.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<body>
+
+    <nav class="w3-sidenav w3-white w3-card-2" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-closenav w3-large">Menu</a>
+   
+     @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "MyTeam")'">My Team</a>
+     }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+    {
+        <a onclick="location.href='@Url.Action("HRRequest", "DisplayHRRequests")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "DisplayRequest")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+ <div class="w3-accordion">
+    <a onclick="location.href='@Url.Action("NewHire", "CreateRequest")'">Raise a Request </a>
+    </div>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("PendingResult", "DisplayPending")'">Pending</a>
+    }
+</nav>
+
+
+
+
+    <header class="w3-container w3-teal">
+        <span class="w3-opennav w3-xlarge" onclick="w3_open()">&#9776;</span>
+        @if(System.Web.HttpContext.Current.Session["pageInfo"].ToString() == "HRRequests")
+        {
+        <h1>HR Requests</h1>
+        }
+        @if (System.Web.HttpContext.Current.Session["pageInfo"].ToString() == "PendingRequests")
+        {
+        <h1>Pending Requests</h1>
+        }
+        @if (System.Web.HttpContext.Current.Session["pageInfo"].ToString() == "MyRequests")
+        {
+        <h1>My Requests</h1>
+        }
+        <div class="navbar-right pull-right" style="animation: ease">
+
+            <button type="submit" class="w3-btn w3-teal w3-border" id="search">Search</button>
+
+        </div>
+    </header>
+
+    <div class="w3-container">
+        <div class="w3-responsive">
+            <table class="w3-table w3-bordered w3-striped w3-hoverable">
+                <tr>
+                    <th>Request Id</th>
+                    <th>Designation</th>
+                    <th>Product</th>
+                    <th>Criticality</th>
+                    <th>Vacancies</th>
+                    <th>Status</th>
+                    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+                    {
+                        <th>Last Reviewed By</th>
+    }
+                </tr>
+                @foreach (RequestData Obj in Model)
+                {
+                    <tr onclick = "location.href='@Url.Action("Index1", "DisplayRequest", new { ReqId = Obj.ReqId})'">
+                        <td>@Obj.ReqId</td>
+                        <td>@Obj.JobTitle</td>
+                        <td>@Obj.ProductName</td>
+                        <td>@Obj.CriticalityName</td>
+                        <td>@Obj.vacancies</td>
+                        <td>@Obj.StatusValue</td>
+                        @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+                        {
+                            <td>@Obj.LastReviewedBy</td>
+    }
+                    </tr>
+          }
+            </table>
+        </div>
+    </div>
+    <div id="searchdiv" class="w3-modal"></div>
+
+    <!-- <footer class="w3-container w3-teal"> -->
+    <!--   <p>Copyright Aptean 2016</p> -->
+    <!-- </footer> -->
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script>
+        function w3_open() {
+            document.getElementById("mySidenav").style.display = "block";
+        }
+        function w3_close() {
+            document.getElementById("mySidenav").style.display = "none";
+        }
+
+        $("#search").click(function () {
+            $("#searchdiv").load("Search");
+            $("#searchdiv").css("display", "block");
+
+        });
+
+        // Accordions
+        function myAccFunc(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+                x.previousElementSibling.className += " w3-dark-grey";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+                x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-dark-grey", "");
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>

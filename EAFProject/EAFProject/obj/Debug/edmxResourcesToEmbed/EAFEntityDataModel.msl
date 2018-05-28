@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EAF2ModelStoreContainer" CdmEntityContainer="EAF2Entities">
+    <EntitySetMapping Name="Candidates">
+      <EntityTypeMapping TypeName="EAF2Model.Candidate">
+        <MappingFragment StoreEntitySet="Candidate">
+          <ScalarProperty Name="TempId" ColumnName="TempId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CandidateStatus" ColumnName="CandidateStatus" />
+          <ScalarProperty Name="resume" ColumnName="resume" />
+          <ScalarProperty Name="interviewdatetime" ColumnName="interviewdatetime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CandidateMappings">
+      <EntityTypeMapping TypeName="EAF2Model.CandidateMapping">
+        <MappingFragment StoreEntitySet="CandidateMapping">
+          <ScalarProperty Name="InterviewId" ColumnName="InterviewId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Depts">
+      <EntityTypeMapping TypeName="EAF2Model.Dept">
+        <MappingFragment StoreEntitySet="Dept">
+          <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Emps">
+      <EntityTypeMapping TypeName="EAF2Model.Emp">
+        <MappingFragment StoreEntitySet="Emp">
+          <ScalarProperty Name="SWG" ColumnName="SWG" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DOJ" ColumnName="DOJ" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DOR" ColumnName="DOR" />
+          <ScalarProperty Name="DOL" ColumnName="DOL" />
+          <ScalarProperty Name="DOO" ColumnName="DOO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Interviews">
+      <EntityTypeMapping TypeName="EAF2Model.Interview">
+        <MappingFragment StoreEntitySet="Interviews">
+          <ScalarProperty Name="InterviewId" ColumnName="InterviewId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobTitles">
+      <EntityTypeMapping TypeName="EAF2Model.JobTitle">
+        <MappingFragment StoreEntitySet="JobTitle">
+          <ScalarProperty Name="JobId" ColumnName="JobId" />
+          <ScalarProperty Name="JobTitle1" ColumnName="JobTitle" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="EAF2Model.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestedSkills">
+      <EntityTypeMapping TypeName="EAF2Model.RequestedSkill">
+        <MappingFragment StoreEntitySet="RequestedSkills">
+          <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+          <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+          <ScalarProperty Name="SkillType" ColumnName="SkillType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="EAF2Model.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+          <ScalarProperty Name="Criticality" ColumnName="Criticality" />
+          <ScalarProperty Name="CostEstimated" ColumnName="CostEstimated" />
+          <ScalarProperty Name="CostActual" ColumnName="CostActual" />
+          <ScalarProperty Name="RequestType" ColumnName="RequestType" />
+          <ScalarProperty Name="CreatedByEmpId" ColumnName="CreatedByEmpId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+          <ScalarProperty Name="Vacancies" ColumnName="Vacancies" />
+          <ScalarProperty Name="minexperience" ColumnName="minexperience" />
+          <ScalarProperty Name="mineducation" ColumnName="mineducation" />
+          <ScalarProperty Name="ReplacementFor" ColumnName="ReplacementFor" />
+          <ScalarProperty Name="FromProductId" ColumnName="FromProductId" />
+          <ScalarProperty Name="FromDepartmentId" ColumnName="FromDepartmentId" />
+          <ScalarProperty Name="FromManagerId" ColumnName="FromManagerId" />
+          <ScalarProperty Name="minCostEstimated" ColumnName="minCostEstimated" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SkillInfoes">
+      <EntityTypeMapping TypeName="EAF2Model.SkillInfo">
+        <MappingFragment StoreEntitySet="SkillInfo">
+          <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+          <ScalarProperty Name="SkillName" ColumnName="SkillName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="EAF2Model.Status">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="StatusValue" ColumnName="StatusValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InterviewComments">
+      <EntityTypeMapping TypeName="EAF2Model.InterviewComment">
+        <MappingFragment StoreEntitySet="InterviewComments">
+          <ScalarProperty Name="InterviewId" ColumnName="InterviewId" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="datetime" ColumnName="datetime" />
+          <ScalarProperty Name="interviewstatus" ColumnName="interviewstatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="EAF2Model.Rating">
+        <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="InterviewId" ColumnName="InterviewId" />
+          <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+          <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequestComments">
+      <EntityTypeMapping TypeName="EAF2Model.RequestComment">
+        <MappingFragment StoreEntitySet="RequestComments">
+          <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+          <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="datetime" ColumnName="datetime" />
+          <ScalarProperty Name="statusId" ColumnName="statusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FK_CandidateMapping_Candidate" TypeName="EAF2Model.FK_CandidateMapping_Candidate" StoreEntitySet="CandidateMapping">
+      <EndProperty Name="Candidate">
+        <ScalarProperty Name="TempId" ColumnName="CandiadteId" />
+      </EndProperty>
+      <EndProperty Name="CandidateMapping">
+        <ScalarProperty Name="InterviewId" ColumnName="InterviewId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_CandidateMapping_Requests" TypeName="EAF2Model.FK_CandidateMapping_Requests" StoreEntitySet="CandidateMapping">
+      <EndProperty Name="Requests">
+        <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+      </EndProperty>
+      <EndProperty Name="CandidateMapping">
+        <ScalarProperty Name="InterviewId" ColumnName="InterviewId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK__Requests__DepartmentId" TypeName="EAF2Model.FK__Requests__DepartmentId" StoreEntitySet="Requests">
+      <EndProperty Name="Dept">
+        <ScalarProperty Name="DeptId" ColumnName="DepartmentId" />
+      </EndProperty>
+      <EndProperty Name="Requests">
+        <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_Emp_Dept" TypeName="EAF2Model.FK_Emp_Dept" StoreEntitySet="Emp">
+      <EndProperty Name="Dept">
+        <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+      </EndProperty>
+      <EndProperty Name="Emp">
+        <ScalarProperty Name="SWG" ColumnName="SWG" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_Emp_JobTitle" TypeName="EAF2Model.FK_Emp_JobTitle" StoreEntitySet="Emp">
+      <EndProperty Name="JobTitle">
+        <ScalarProperty Name="JobId" ColumnName="JobId" />
+      </EndProperty>
+      <EndProperty Name="Emp">
+        <ScalarProperty Name="SWG" ColumnName="SWG" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_Emp_Manager" TypeName="EAF2Model.FK_Emp_Manager" StoreEntitySet="Emp">
+      <EndProperty Name="Emp">
+        <ScalarProperty Name="SWG" ColumnName="ManagerId" />
+      </EndProperty>
+      <EndProperty Name="Emp1">
+        <ScalarProperty Name="SWG" ColumnName="SWG" />
+      </EndProperty>
+      <Condition IsNull="false" ColumnName="ManagerId" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_Emp_Product" TypeName="EAF2Model.FK_Emp_Product" StoreEntitySet="Emp">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+      </EndProperty>
+      <EndProperty Name="Emp">
+        <ScalarProperty Name="SWG" ColumnName="SWG" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_Interviews_Emp" TypeName="EAF2Model.FK_Interviews_Emp" StoreEntitySet="Interviews">
+      <EndProperty Name="Emp">
+        <ScalarProperty Name="SWG" ColumnName="InterviewerId" />
+      </EndProperty>
+      <EndProperty Name="Interviews">
+        <ScalarProperty Name="InterviewId" ColumnName="InterviewId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK__Requests__jobid" TypeName="EAF2Model.FK__Requests__jobid" StoreEntitySet="Requests">
+      <EndProperty Name="JobTitle">
+        <ScalarProperty Name="JobId" ColumnName="jobid" />
+      </EndProperty>
+      <EndProperty Name="Requests">
+        <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+      </EndProperty>
+      <Condition IsNull="false" ColumnName="jobid" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_Requests_Product" TypeName="EAF2Model.FK_Requests_Product" StoreEntitySet="Requests">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+      </EndProperty>
+      <EndProperty Name="Requests">
+        <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK__Requests__Status" TypeName="EAF2Model.FK__Requests__Status" StoreEntitySet="Requests">
+      <EndProperty Name="Status">
+        <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+      </EndProperty>
+      <EndProperty Name="Requests">
+        <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+      </EndProperty>
+      <Condition IsNull="false" ColumnName="StatusId" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RequestedCandidates" TypeName="EAF2Model.RequestedCandidates" StoreEntitySet="RequestedCandidates">
+      <EndProperty Name="Candidate">
+        <ScalarProperty Name="TempId" ColumnName="CandidateId" />
+      </EndProperty>
+      <EndProperty Name="Requests">
+        <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

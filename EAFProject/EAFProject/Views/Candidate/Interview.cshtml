@@ -1,0 +1,223 @@
+﻿@model Tuple<List<EAFProject.ViewModels.Interview>, List<EAFProject.ViewModels.InterviewComments>>
+@*@model List<EAFProject.Models.Interview>*@
+@{
+    ViewBag.Title = "Interview";
+}
+<link href="~/Styles/W3.css" rel="stylesheet" />
+<link href="~/Styles/style.css" rel="stylesheet" />
+<link href="~/Styles/JQueryUi.css" rel="stylesheet" />
+<link href="~/Styles/FontAwesomeMin.css" rel="stylesheet" />
+<div class="w3-modal-content w3-card-8 w3-animate-zoom" style="max-width: 800px">
+    <span onclick="document.getElementById('id03').style.display='none'" class="w3-closebtn w3-hover-red w3-container w3-padding-8 w3-display-topright " title="Close Modal">&times;</span>
+    <div class="w3-center">
+        <br>
+    </div>
+    <center><h2>Interview Form</h2></center>
+    <form class="w3-container" method="post" id="form_id">
+        <div class="w3-section w3-margin">
+            <div class="w3-group">
+                @*<input class="w3-input" type="text">*@
+                <h4>@ViewBag.CandidateName</h4>
+                <label class="w3-label ">Candidate Name</label>
+            </div>
+
+            <div id="essentialsskillsdiv" class="w3-group w3-border">
+
+                @* @using (Html.BeginForm())
+            {
+                  *@<label class="w3-validate">Essential Skills</label>
+                <br>
+                <br>
+
+                @for (int i = 0; i < Model.Item1.Count(); i++)
+                {
+                    if ((Model.Item1[i].SkillType) == "Essential")
+                    {
+                    @Html.HiddenFor(m => Model.Item1[i].SkillId)
+                    @Html.DisplayFor(m => Model.Item1[i].SkillName)<strong>&nbsp;</strong><strong>&nbsp;</strong>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 1)
+                    <label class="w3-validate">1<span style="color:red"></span></label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 2)
+                    <label class="w3-validate">2<span style="color:red"></span></label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 3)
+                    <label class="w3-validate">3<span style="color:red"></span></label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 4)
+                    <label class="w3-validate">4<span style="color:red"></span></label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 5)
+                    <label class="w3-validate">5<span style="color:red">@Html.ValidationMessageFor(model => Model.Item1[i].Rating)</span></label>
+                    <br>
+                    }
+                }
+                <br />
+            </div>
+            <div id="desiredskillsdiv" class="w3-group w3-border">
+                <label class="w3-validate">Desired Skills</label>
+                <br>
+                <br>
+                @for (int i = 0; i < Model.Item1.Count(); i++)
+                {
+                    if ((Model.Item1[i].SkillType) == "Desired")
+                    {
+                    @Html.HiddenFor(m => Model.Item1[i].SkillId)
+                    @Html.DisplayFor(m => Model.Item1[i].SkillName)<strong>&nbsp;</strong><strong>&nbsp;</strong>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 1)
+                    <label class="w3-validate">1</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 2)
+                    <label class="w3-validate">2</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 3)
+                    <label class="w3-validate">3</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 4)
+                    <label class="w3-validate">4</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 5)
+                    <label class="w3-validate">5<br /><span style="color:red">@Html.ValidationMessageFor(model => Model.Item1[i].Rating)</span></label>
+                    <br>
+                    }
+                }
+                <br />
+            </div>
+
+            <div id="optionalskillsdiv" class="w3-group w3-border">
+                <label class="w3-validate">Optional Skills</label>
+                <br>
+                <br>
+                @for (int i = 0; i < Model.Item1.Count(); i++)
+                {
+                    if ((Model.Item1[i].SkillType) == "Optional")
+                    {
+                    @Html.HiddenFor(m => Model.Item1[i].SkillId)
+                    @Html.DisplayFor(m => Model.Item1[i].SkillName)<strong>&nbsp;</strong><strong>&nbsp;</strong>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 1)
+                    <label class="w3-validate">1</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 2)
+                    <label class="w3-validate">2</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 3)
+                    <label class="w3-validate">3</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 4)
+                    <label class="w3-validate">4</label>
+                    @Html.RadioButtonFor(m => Model.Item1[i].Rating, 5)
+                    <label class="w3-validate">5<span style="color:red">@Html.ValidationMessageFor(model => Model.Item1[i].Rating)</span></label><br>
+                    <br>
+                    }
+                }
+            </div>
+            <div class="w3-group w3-border">
+
+
+
+                <label class="w3-validate">Comments<span style="color:red">*</span></label>
+                @*<textarea id="comments" name="comments"  rows="4" cols="50" maxlength="50"></textarea>*@
+                @Html.TextArea("comments", new { rows = "4", cols = "50",maxlength="255",id="comments" })
+                <br>
+                <br>
+                <label class="w3-validate">Recommendation<span style="color:red">*</span></label>
+                
+                <input class="w3-radio" type="radio" name="status" id="status_Hire" value="Hire">
+                <label class="w3-validate status">Hire</label>
+
+                <input class="w3-radio" type="radio" name="status" id="status_Reject" value="Reject">
+                <label class="w3-validate status">Reject</label>
+
+                <input class="w3-radio" type="radio" name="status" id="status_OnHold" value="On Hold">
+                <label class="w3-validate status">On Hold</label>
+                <br>
+                <br>
+            </div>
+            <div class="w3-group w3-border">
+
+                <table name="interviewcomments" class="w3-table w3-bordered w3-striped w3-hoverable">
+                    <tr>
+                        <th class="w3-label" style="width: 20%">
+                            <label>Interviewer Name</label><strong>&nbsp;</strong><strong>&nbsp;</strong>
+                        </th>
+
+                        <th class="w3-label" style="width: 10%">
+                            <label>Status</label>
+                        </th>
+
+                        <th class="w3-label" style="width: 30%">
+                            <label>Date & Time</label>
+                        </th>
+
+                        <th class="w3-label" style="width: 40%">
+                            <label>Comments</label>
+                        </th>
+
+                    </tr>
+
+                    @foreach (var item in Model.Item2)
+                    {
+                        <tr>
+                            <td style="width: 20%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                @Html.DisplayFor(modelItem => item.InterviewerName)
+                            </td>
+
+                            <td style="width: 10%"><strong>&nbsp;</strong>
+                                @Html.DisplayFor(modelItem => item.Status)
+
+                            </td>
+                            <td style="width: 30%">
+                                @Html.DisplayFor(modelItem => item.Datetime)
+                            </td>
+
+                            <td style="width: 40%; word-wrap: break-word; word-break: break-all; white-space: normal;">
+                                @Html.DisplayFor(modelItem => item.Comments)
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            @*<button class="w3-btn-block w3-teal" name="action:Interview" type="submit">Submit</button>*@
+            <input id="btnSave" type="submit" class="w3-btn-block w3-teal" name="action:Interview" value="Submit" />
+        </div>
+    </form>
+</div>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var status = $.trim($("table[name='interviewcomments'] tr:last-child td:nth-child(2)").text());
+        if (status == "On Hold") {
+            $("#status_OnHold").prop("checked", true);
+        } else {
+            $("#status_" + status).prop("checked", true);
+        }
+ 
+        if (status == null || status == undefined ||status=="") {
+            $("#essentialsskillsdiv input").attr("disabled", false);
+            $("#desiredskillsdiv input").attr("disabled", false);
+            $("#optionalskillsdiv input").attr("disabled", false);
+        }
+        else {
+            $("#essentialsskillsdiv input").attr("disabled", true);
+            $("#desiredskillsdiv input").attr("disabled", true);
+            $("#optionalskillsdiv input").attr("disabled", true);
+        }
+
+    });
+
+    $(function () {
+        $('#btnSave').click(function () {
+            var mandatoryfilled = false;
+            if (!$("input[name='status']:checked").val()) {
+                alert('Please select a Recommendation');
+                return false;
+            }
+            
+
+            if ($("#comments").val() == "" || $("#comments").val() == null || $("#comments").val() == undefined) {
+                alert("Please Enter Comments");
+               
+                return false;
+            }
+
+
+       
+
+
+        });
+
+    });
+</script>

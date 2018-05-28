@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EAF2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Candidate">
+    <Key>
+      <PropertyRef Name="TempId" />
+    </Key>
+    <Property Name="TempId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="Int64" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CandidateStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="resume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="interviewdatetime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CandidateMappings" Relationship="Self.FK_CandidateMapping_Candidate" FromRole="Candidate" ToRole="CandidateMapping" />
+    <NavigationProperty Name="Request" Relationship="Self.RequestedCandidates" FromRole="Candidate" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="CandidateMapping">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+    </Key>
+    <Property Name="InterviewId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Candidate" Relationship="Self.FK_CandidateMapping_Candidate" FromRole="CandidateMapping" ToRole="Candidate" />
+    <NavigationProperty Name="Interview" Relationship="Self.FK_CandidateMapping_Interviews" FromRole="CandidateMapping" ToRole="Interviews" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_CandidateMapping_Requests" FromRole="CandidateMapping" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Dept">
+    <Key>
+      <PropertyRef Name="DeptId" />
+    </Key>
+    <Property Name="DeptId" Type="Int32" Nullable="false" />
+    <Property Name="DeptName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__DepartmentId" FromRole="Dept" ToRole="Requests" />
+    <NavigationProperty Name="Emps" Relationship="Self.FK_Emp_Dept" FromRole="Dept" ToRole="Emp" />
+  </EntityType>
+  <EntityType Name="Emp">
+    <Key>
+      <PropertyRef Name="SWG" />
+    </Key>
+    <Property Name="SWG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOJ" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DOR" Type="DateTime" Precision="0" />
+    <Property Name="DOL" Type="DateTime" Precision="0" />
+    <Property Name="DOO" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Dept" Relationship="Self.FK_Emp_Dept" FromRole="Emp" ToRole="Dept" />
+    <NavigationProperty Name="JobTitle" Relationship="Self.FK_Emp_JobTitle" FromRole="Emp" ToRole="JobTitle" />
+    <NavigationProperty Name="Emp1" Relationship="Self.FK_Emp_Manager" FromRole="Emp" ToRole="Emp1" />
+    <NavigationProperty Name="Emp2" Relationship="Self.FK_Emp_Manager" FromRole="Emp1" ToRole="Emp" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_Emp_Product" FromRole="Emp" ToRole="Product" />
+    <NavigationProperty Name="InterviewComments" Relationship="Self.FK_InterviewComments_Emp" FromRole="Emp" ToRole="InterviewComments" />
+    <NavigationProperty Name="Interviews" Relationship="Self.FK_Interviews_Emp" FromRole="Emp" ToRole="Interviews" />
+    <NavigationProperty Name="RequestComments" Relationship="Self.FK_RequestComments_Emp" FromRole="Emp" ToRole="RequestComments" />
+  </EntityType>
+  <EntityType Name="Interview">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+    </Key>
+    <Property Name="InterviewId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CandidateMapping" Relationship="Self.FK_CandidateMapping_Interviews" FromRole="Interviews" ToRole="CandidateMapping" />
+    <NavigationProperty Name="Emp" Relationship="Self.FK_Interviews_Emp" FromRole="Interviews" ToRole="Emp" />
+    <NavigationProperty Name="InterviewComments" Relationship="Self.FK_InterviewComments_Interviews" FromRole="Interviews" ToRole="InterviewComments" />
+    <NavigationProperty Name="Ratings" Relationship="Self.FK_Ratings_Interviews" FromRole="Interviews" ToRole="Ratings" />
+  </EntityType>
+  <EntityType Name="JobTitle">
+    <Key>
+      <PropertyRef Name="JobId" />
+    </Key>
+    <Property Name="JobId" Type="Int32" Nullable="false" />
+    <Property Name="JobTitle1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Emps" Relationship="Self.FK_Emp_JobTitle" FromRole="JobTitle" ToRole="Emp" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__jobid" FromRole="JobTitle" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Emps" Relationship="Self.FK_Emp_Product" FromRole="Product" ToRole="Emp" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Product" FromRole="Product" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="RequestedSkill">
+    <Key>
+      <PropertyRef Name="ReqId" />
+      <PropertyRef Name="SkillId" />
+    </Key>
+    <Property Name="ReqId" Type="Int32" Nullable="false" />
+    <Property Name="SkillId" Type="Int32" Nullable="false" />
+    <Property Name="SkillType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_RequestedSkills_Requests" FromRole="RequestedSkills" ToRole="Requests" />
+    <NavigationProperty Name="SkillInfo" Relationship="Self.FK_RequestedSkills_SkillInfo" FromRole="RequestedSkills" ToRole="SkillInfo" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="ReqId" />
+    </Key>
+    <Property Name="ReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Criticality" Type="Int32" Nullable="false" />
+    <Property Name="CostEstimated" Type="Int32" />
+    <Property Name="CostActual" Type="Int32" />
+    <Property Name="RequestType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedByEmpId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="LastModifiedDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="AssignedTo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Vacancies" Type="Int32" Nullable="false" />
+    <Property Name="minexperience" Type="Int32" />
+    <Property Name="mineducation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ReplacementFor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FromProductId" Type="Int32" />
+    <Property Name="FromDepartmentId" Type="Int32" />
+    <Property Name="FromManagerId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="minCostEstimated" Type="Int32" />
+    <NavigationProperty Name="CandidateMappings" Relationship="Self.FK_CandidateMapping_Requests" FromRole="Requests" ToRole="CandidateMapping" />
+    <NavigationProperty Name="Dept" Relationship="Self.FK__Requests__DepartmentId" FromRole="Requests" ToRole="Dept" />
+    <NavigationProperty Name="JobTitle" Relationship="Self.FK__Requests__jobid" FromRole="Requests" ToRole="JobTitle" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_Requests_Product" FromRole="Requests" ToRole="Product" />
+    <NavigationProperty Name="RequestedSkills" Relationship="Self.FK_RequestedSkills_Requests" FromRole="Requests" ToRole="RequestedSkills" />
+    <NavigationProperty Name="Status" Relationship="Self.FK__Requests__Status" FromRole="Requests" ToRole="Status" />
+    <NavigationProperty Name="RequestComments" Relationship="Self.FK_RequestComments_Requests" FromRole="Requests" ToRole="RequestComments" />
+    <NavigationProperty Name="Candidates" Relationship="Self.RequestedCandidates" FromRole="Requests" ToRole="Candidate" />
+  </EntityType>
+  <EntityType Name="SkillInfo">
+    <Key>
+      <PropertyRef Name="SkillId" />
+    </Key>
+    <Property Name="SkillId" Type="Int32" Nullable="false" />
+    <Property Name="SkillName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="RequestedSkills" Relationship="Self.FK_RequestedSkills_SkillInfo" FromRole="SkillInfo" ToRole="RequestedSkills" />
+    <NavigationProperty Name="Ratings" Relationship="Self.FK_Ratings_SkillInfo" FromRole="SkillInfo" ToRole="Ratings" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="Int32" Nullable="false" />
+    <Property Name="StatusValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__Status" FromRole="Status" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="InterviewComment">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="comments" />
+      <PropertyRef Name="interviewstatus" />
+    </Key>
+    <Property Name="InterviewId" Type="Int32" Nullable="false" />
+    <Property Name="EmpId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="comments" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="datetime" Type="DateTime" Precision="3" />
+    <Property Name="interviewstatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Emp" Relationship="Self.FK_InterviewComments_Emp" FromRole="InterviewComments" ToRole="Emp" />
+    <NavigationProperty Name="Interview" Relationship="Self.FK_InterviewComments_Interviews" FromRole="InterviewComments" ToRole="Interviews" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="InterviewId" />
+      <PropertyRef Name="SkillId" />
+      <PropertyRef Name="Ratings" />
+    </Key>
+    <Property Name="InterviewId" Type="Int32" Nullable="false" />
+    <Property Name="SkillId" Type="Int32" Nullable="false" />
+    <Property Name="Ratings" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Interview" Relationship="Self.FK_Ratings_Interviews" FromRole="Ratings" ToRole="Interviews" />
+    <NavigationProperty Name="SkillInfo" Relationship="Self.FK_Ratings_SkillInfo" FromRole="Ratings" ToRole="SkillInfo" />
+  </EntityType>
+  <EntityType Name="RequestComment">
+    <Key>
+      <PropertyRef Name="ReqId" />
+      <PropertyRef Name="EmpId" />
+      <PropertyRef Name="comments" />
+      <PropertyRef Name="statusId" />
+    </Key>
+    <Property Name="ReqId" Type="Int32" Nullable="false" />
+    <Property Name="EmpId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="comments" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="datetime" Type="DateTime" Precision="3" />
+    <Property Name="statusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Emp" Relationship="Self.FK_RequestComments_Emp" FromRole="RequestComments" ToRole="Emp" />
+    <NavigationProperty Name="Request" Relationship="Self.FK_RequestComments_Requests" FromRole="RequestComments" ToRole="Requests" />
+  </EntityType>
+  <Association Name="FK_CandidateMapping_Candidate">
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="1" />
+    <End Role="CandidateMapping" Type="Self.CandidateMapping" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_CandidateMapping_Interviews">
+    <End Role="Interviews" Type="Self.Interview" Multiplicity="1" />
+    <End Role="CandidateMapping" Type="Self.CandidateMapping" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Interviews">
+        <PropertyRef Name="InterviewId" />
+      </Principal>
+      <Dependent Role="CandidateMapping">
+        <PropertyRef Name="InterviewId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CandidateMapping_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="1" />
+    <End Role="CandidateMapping" Type="Self.CandidateMapping" Multiplicity="*" />
+  </Association>
+  <Association Name="FK__Requests__DepartmentId">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_Emp_Dept">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="Emp" Type="Self.Emp" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_Emp_JobTitle">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="1" />
+    <End Role="Emp" Type="Self.Emp" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_Emp_Manager">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="0..1" />
+    <End Role="Emp1" Type="Self.Emp" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_Emp_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Emp" Type="Self.Emp" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_InterviewComments_Emp">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="1" />
+    <End Role="InterviewComments" Type="Self.InterviewComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Emp">
+        <PropertyRef Name="SWG" />
+      </Principal>
+      <Dependent Role="InterviewComments">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Interviews_Emp">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="1" />
+    <End Role="Interviews" Type="Self.Interview" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_RequestComments_Emp">
+    <End Role="Emp" Type="Self.Emp" Multiplicity="1" />
+    <End Role="RequestComments" Type="Self.RequestComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Emp">
+        <PropertyRef Name="SWG" />
+      </Principal>
+      <Dependent Role="RequestComments">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InterviewComments_Interviews">
+    <End Role="Interviews" Type="Self.Interview" Multiplicity="1" />
+    <End Role="InterviewComments" Type="Self.InterviewComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Interviews">
+        <PropertyRef Name="InterviewId" />
+      </Principal>
+      <Dependent Role="InterviewComments">
+        <PropertyRef Name="InterviewId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ratings_Interviews">
+    <End Role="Interviews" Type="Self.Interview" Multiplicity="1" />
+    <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Interviews">
+        <PropertyRef Name="InterviewId" />
+      </Principal>
+      <Dependent Role="Ratings">
+        <PropertyRef Name="InterviewId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Requests__jobid">
+    <End Role="JobTitle" Type="Self.JobTitle" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_Requests_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_RequestedSkills_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="1" />
+    <End Role="RequestedSkills" Type="Self.RequestedSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ReqId" />
+      </Principal>
+      <Dependent Role="RequestedSkills">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestedSkills_SkillInfo">
+    <End Role="SkillInfo" Type="Self.SkillInfo" Multiplicity="1" />
+    <End Role="RequestedSkills" Type="Self.RequestedSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SkillInfo">
+        <PropertyRef Name="SkillId" />
+      </Principal>
+      <Dependent Role="RequestedSkills">
+        <PropertyRef Name="SkillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Requests__Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_RequestComments_Requests">
+    <End Role="Requests" Type="Self.Request" Multiplicity="1" />
+    <End Role="RequestComments" Type="Self.RequestComment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ReqId" />
+      </Principal>
+      <Dependent Role="RequestComments">
+        <PropertyRef Name="ReqId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ratings_SkillInfo">
+    <End Role="SkillInfo" Type="Self.SkillInfo" Multiplicity="1" />
+    <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SkillInfo">
+        <PropertyRef Name="SkillId" />
+      </Principal>
+      <Dependent Role="Ratings">
+        <PropertyRef Name="SkillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RequestedCandidates">
+    <End Role="Candidate" Type="Self.Candidate" Multiplicity="*" />
+    <End Role="Requests" Type="Self.Request" Multiplicity="0..1" />
+  </Association>
+  <EntityContainer Name="EAF2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Candidates" EntityType="Self.Candidate" />
+    <EntitySet Name="CandidateMappings" EntityType="Self.CandidateMapping" />
+    <EntitySet Name="Depts" EntityType="Self.Dept" />
+    <EntitySet Name="Emps" EntityType="Self.Emp" />
+    <EntitySet Name="Interviews" EntityType="Self.Interview" />
+    <EntitySet Name="JobTitles" EntityType="Self.JobTitle" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="RequestedSkills" EntityType="Self.RequestedSkill" />
+    <EntitySet Name="Requests" EntityType="Self.Request" />
+    <EntitySet Name="SkillInfoes" EntityType="Self.SkillInfo" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="InterviewComments" EntityType="Self.InterviewComment" />
+    <EntitySet Name="Ratings" EntityType="Self.Rating" />
+    <EntitySet Name="RequestComments" EntityType="Self.RequestComment" />
+    <AssociationSet Name="FK_CandidateMapping_Candidate" Association="Self.FK_CandidateMapping_Candidate">
+      <End Role="Candidate" EntitySet="Candidates" />
+      <End Role="CandidateMapping" EntitySet="CandidateMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CandidateMapping_Interviews" Association="Self.FK_CandidateMapping_Interviews">
+      <End Role="Interviews" EntitySet="Interviews" />
+      <End Role="CandidateMapping" EntitySet="CandidateMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CandidateMapping_Requests" Association="Self.FK_CandidateMapping_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="CandidateMapping" EntitySet="CandidateMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__DepartmentId" Association="Self.FK__Requests__DepartmentId">
+      <End Role="Dept" EntitySet="Depts" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Dept" Association="Self.FK_Emp_Dept">
+      <End Role="Dept" EntitySet="Depts" />
+      <End Role="Emp" EntitySet="Emps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_JobTitle" Association="Self.FK_Emp_JobTitle">
+      <End Role="JobTitle" EntitySet="JobTitles" />
+      <End Role="Emp" EntitySet="Emps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Manager" Association="Self.FK_Emp_Manager">
+      <End Role="Emp" EntitySet="Emps" />
+      <End Role="Emp1" EntitySet="Emps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Emp_Product" Association="Self.FK_Emp_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Emp" EntitySet="Emps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InterviewComments_Emp" Association="Self.FK_InterviewComments_Emp">
+      <End Role="Emp" EntitySet="Emps" />
+      <End Role="InterviewComments" EntitySet="InterviewComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Interviews_Emp" Association="Self.FK_Interviews_Emp">
+      <End Role="Emp" EntitySet="Emps" />
+      <End Role="Interviews" EntitySet="Interviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestComments_Emp" Association="Self.FK_RequestComments_Emp">
+      <End Role="Emp" EntitySet="Emps" />
+      <End Role="RequestComments" EntitySet="RequestComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InterviewComments_Interviews" Association="Self.FK_InterviewComments_Interviews">
+      <End Role="Interviews" EntitySet="Interviews" />
+      <End Role="InterviewComments" EntitySet="InterviewComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ratings_Interviews" Association="Self.FK_Ratings_Interviews">
+      <End Role="Interviews" EntitySet="Interviews" />
+      <End Role="Ratings" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__jobid" Association="Self.FK__Requests__jobid">
+      <End Role="JobTitle" EntitySet="JobTitles" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Product" Association="Self.FK_Requests_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestedSkills_Requests" Association="Self.FK_RequestedSkills_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="RequestedSkills" EntitySet="RequestedSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestedSkills_SkillInfo" Association="Self.FK_RequestedSkills_SkillInfo">
+      <End Role="SkillInfo" EntitySet="SkillInfoes" />
+      <End Role="RequestedSkills" EntitySet="RequestedSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__Status" Association="Self.FK__Requests__Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestComments_Requests" Association="Self.FK_RequestComments_Requests">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="RequestComments" EntitySet="RequestComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ratings_SkillInfo" Association="Self.FK_Ratings_SkillInfo">
+      <End Role="SkillInfo" EntitySet="SkillInfoes" />
+      <End Role="Ratings" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="RequestedCandidates" Association="Self.RequestedCandidates">
+      <End Role="Candidate" EntitySet="Candidates" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

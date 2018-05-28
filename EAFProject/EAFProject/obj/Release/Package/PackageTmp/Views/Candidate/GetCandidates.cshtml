@@ -1,0 +1,182 @@
+﻿@model IEnumerable<EAFProject.Models.CandidateClass>
+
+@{
+    ViewBag.Title = "GetCandidates";
+}
+<!DOCTYPE html>
+<html>
+<title>Candidate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Styles/style.css" rel="stylesheet" />
+<link href="~/Styles/W3.css" rel="stylesheet" />
+<body>
+
+    <nav class="w3-sidenav w3-white w3-card-2" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-closenav w3-large">Menu</a>
+     @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "MyTeam")'">My Team</a>
+     }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+    {
+        <a onclick="location.href='@Url.Action("HRRequest", "DisplayHRRequests")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "DisplayRequest")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+ <div class="w3-accordion">
+    <a onclick="location.href='@Url.Action("NewHire", "CreateRequest")'">Raise a Request </a>
+    </div>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("PendingResult", "DisplayPending")'">Pending</a>
+    }
+</nav>
+
+    <header class="w3-container w3-teal">
+        <span class="w3-opennav w3-xlarge" onclick="w3_open()">&#9776;</span>
+        <h1>Candidates</h1>
+    </header>
+
+    <hr>
+    <div class="w3-container">
+        <div class="w3-border">
+            <ul class="w3-navbar w3-light-grey">
+                <li><a class="w3-btn testbtn w3-border" onclick="location.href='@Url.Action("Index1", "DisplayRequest", new { ReqId = ViewBag.ReqId })'">Request Detail</a></li>
+
+                <li><a class="w3-btn testbtn w3-border" onclick="location.href='@Url.Action("GetCandidates", "Candidate", new { ReqId = ViewBag.ReqId })'">Candidates</a></li>
+
+            </ul>
+
+            <div id="rd" class="w3-container city w3-animate-opacity">
+                <h2>Candidates</h2>
+
+                <div class="w3-row">
+                    <table class="w3-table w3-bordered w3-striped w3-hoverable">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.phoneNumber)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.candidateStatus)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FileName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+
+                                    @*<a href="" onclick="document.getElementById('id01').style.display='block';return false;">@Html.DisplayFor(modelItem => item.name)</a>*@
+                                    @if (System.Web.HttpContext.Current.Session["role"].ToString() != "HR")
+                                    {
+                                        <a name="candidateFeedback" tempId="@item.TempId" href="#">@Html.DisplayFor(modelItem => item.name)</a>
+                                    }
+                                    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+                                    {
+                                        @Html.DisplayFor(modelItem => item.name)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.phoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.candidateStatus)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("OpenFile", "Candidate", new { fileName = item.FileName })">@Html.DisplayFor(modelItem => item.FileName)</a>
+                                </td>
+                                <th>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </th>
+                            </tr>
+                        }
+                    </table>
+                    <br>
+                    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+                    {
+                        <button class="w3-btn w3-teal" id="addCandidate">Add Candidate</button> 
+@* <button class="w3-btn w3-teal" id="interview">Interview</button>  *@               
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="id02" class="w3-modal"></div>
+    <div id="id03" class="w3-modal"></div>
+    <!--<footer class="w3-container w3-teal">
+  <p>Copyright Aptean 2016</p>
+</footer> -->
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script>
+        function w3_open() {
+            document.getElementById("mySidenav").style.display = "block";
+        }
+        function w3_close() {
+            document.getElementById("mySidenav").style.display = "none";
+        }
+
+        // Accordions
+        function myAccFunc(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+                x.previousElementSibling.className += " w3-dark-grey";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+                x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-dark-grey", "");
+            }
+        }
+
+
+
+        $("a[name=candidateFeedback]").click(function () {
+            // alert($(this).attr("tempId"));
+            $("#id03").empty();
+            $("#id03").load("Interview?TempId=" + $(this).attr("tempId"));
+            $("#id03").css("display", "block");
+        });
+
+        $("#addCandidate").click(function () {
+            $("#id02").empty();
+            $("#id02").load("AddCandidate?ReqId=ViewBag.ReqId");
+            $("#id02").css("display", "block");
+
+        });
+        //$("#interview").click(function () {
+        //    $("#id03").load("Interview?TempId=43");
+        //    $("#id03").css("display", "block");
+        //});
+
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+

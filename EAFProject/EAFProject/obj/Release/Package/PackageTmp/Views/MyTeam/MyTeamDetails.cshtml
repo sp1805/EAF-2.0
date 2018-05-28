@@ -1,0 +1,164 @@
+﻿@model EAFProject.Models.EmployeeClass
+@using EAFProject.DatabaseController
+@using EAFProject.Controllers
+@using EAFProject.Models
+@{
+    ViewBag.Title = "MyTeamDetails";
+}
+
+
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Styles/style.css" rel="stylesheet" />
+<link href="~/Styles/W3.css" rel="stylesheet" />
+<body>
+
+<nav class="w3-sidenav w3-white w3-card-2" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-closenav w3-large">Menu</a>
+     @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "MyTeam")'">My Team</a>
+     }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+    {
+        <a onclick="location.href='@Url.Action("HRRequest", "DisplayHRRequests")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "DisplayRequest")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+ <div class="w3-accordion">
+    <a onclick="location.href='@Url.Action("NewHire", "CreateRequest")'">Raise a Request </a>
+    </div>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("PendingResult", "DisplayPending")'">Pending</a>
+    }
+</nav>
+
+<header class="w3-container w3-teal">
+  <span class="w3-opennav w3-xlarge" onclick="w3_open()">&#9776;</span>
+  <h1>My Team</h1>
+</header>
+<div class="w3-container">
+<div class="w3-border">
+
+<div id="rd" class="w3-container city w3-animate-opacity">
+  <h2>Details</h2>
+
+			  <div class="w3-row">
+			<div class="w3-half w3-padding w3-margin-top">
+			<form class="w3-container w3-card-4">
+             <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.swg)
+                  </span>
+                  <label class="w3-label w3-validate">SWG ID</label><br/>  
+			  </div>
+
+			  <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.name)
+                  </span>
+                  <label class="w3-label w3-validate">Name</label><br/>  
+			  </div>
+
+                <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.jobTitle)
+                  </span>
+                  <label class="w3-label w3-validate">Designation</label><br/>  
+			  </div>
+
+			 <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.deptName)
+                  </span>
+                  <label class="w3-label w3-validate">Department</label><br/>  
+			  </div>
+
+                <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.product)
+                  </span>
+                  <label class="w3-label w3-validate">Product</label><br/>  
+			  </div>
+                 <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.email)
+                  </span>
+                  <label class="w3-label w3-validate">Email Id</label><br/>  
+			  </div>
+
+                <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.dateOfJoining)
+                  </span>
+                  <label class="w3-label w3-validate">Date Of Joining</label><br/>  
+			  </div>
+                 <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.dateOfOffer)
+                  </span>
+                  <label class="w3-label w3-validate">Date Of Offer</label><br/>  
+			  </div>               
+                
+              <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.dateOfResignation)
+                  </span>
+                  <label class="w3-label w3-validate">Date of Resignation</label><br/>  
+			  </div>
+               
+                <div class="w3-group">
+                  <span class="w3-input">
+                      @Html.DisplayFor(model => model.lastDay)
+                  </span>
+                  <label class="w3-label w3-validate">Last Day</label><br/>  
+			  </div>
+               
+
+			  <br>
+			  <div class="w3-row">
+			  </div>
+
+			  
+			</form>
+			</div>
+			</div>
+    </div>
+    <button class="w3-btn w3-teal" onclick="location.href='@Url.Action("MyTeamEdit", "MyTeam",new {swg = Model.swg,MgrId=System.Web.HttpContext.Current.Session["swgId"].ToString()})'">Edit</button>
+    <button class="w3-btn w3-teal" onclick="location.href='@Url.Action("Index", "MyTeam",new {MgrId=System.Web.HttpContext.Current.Session["swgId"].ToString()})'">Back</button>
+</div>
+
+    <script>
+        function w3_open() {
+            document.getElementById("mySidenav").style.display = "block";
+        }
+        function w3_close() {
+            document.getElementById("mySidenav").style.display = "none";
+        }
+
+        // Accordions
+        function myAccFunc(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+                x.previousElementSibling.className += " w3-dark-grey";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+                x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-dark-grey", "");
+            }
+        }
+
+</script>
+     
+</body>
+</html>

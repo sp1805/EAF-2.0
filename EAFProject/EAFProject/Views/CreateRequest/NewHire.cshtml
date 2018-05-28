@@ -1,0 +1,930 @@
+﻿@model EAFProject.BusinessComponents.RequestData
+
+@{
+    ViewBag.Title = "New Hire";
+    
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+<link rel="stylesheet" href="lib/google-code-prettify/prettify.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link href="~/Styles/FontAwesomeMin.css" rel="stylesheet" />
+<link href="~/Styles/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+<link href="~/Styles/style.css" rel="stylesheet" />
+<link href="~/Styles/JQueryUi.css" rel="stylesheet" />
+<link href="~/Styles/W3.css" rel="stylesheet" />
+
+<nav class="w3-sidenav w3-white w3-card-2" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-closenav w3-large">Menu</a>
+     @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "MyTeam")'">My Team</a>
+     }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+    {
+        <a onclick="location.href='@Url.Action("HRRequest", "DisplayHRRequests")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "DisplayRequest")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+ <div class="w3-accordion">
+    <a onclick="location.href='@Url.Action("NewHire", "CreateRequest")'">Raise a Request </a>
+    </div>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("PendingResult", "DisplayPending")'">Pending</a>
+    }
+</nav>
+
+
+<header class="w3-container w3-teal">
+    <span class="w3-opennav w3-xlarge" onclick="w3_open()">&#9776;</span>
+    <h1>Raise a Request</h1>
+</header>
+<div class="w3-container">
+    <div class="w3-border">
+        <ul class="w3-navbar w3-light-grey">
+            <li><a class="w3-btn testbtn w3-border" onclick="openCity(event, 'nh')">New Hire</a></li>
+            <li><a class="w3-btn testbtn w3-border" onclick="openCity(event, 'rep')">Replacement</a></li>
+            <li><a class="w3-btn testbtn w3-border" onclick="openCity(event, 'inttr')">Internal Transfer</a></li>
+        </ul>
+
+        <div id="nh" class="w3-container city w3-animate-opacity w3-half">
+            <h2>New Hire</h2>
+            <div class="w3-row centre">
+                <div class="w3-padding w3-margin-top">
+                    <form class="w3-container w3-card-4" method="post" name="myForm" id="nhFormID">
+
+                        @Html.ValidationSummary(true)
+                        <span class='spanMaxCTC' style='color: red'></span>
+
+                        @if (!string.IsNullOrEmpty(ViewBag.Status))
+                        {
+                            <h2>Data saved successfully !</h2>
+                            <script>
+                                //alert('Data saved successfully !'); // place your comment.
+
+                            </script>
+                        }
+
+                        @if (ViewBag.IsSubmitted)
+                        {     
+        
+                            <div class="w3-group">
+                                @Html.LabelFor(model => model.ReqId)
+                                @{
+                            var reqId = (int)ViewBag.reqId;
+                                    @Html.TextBox("ReqId", reqId, new { @readonly = "readonly" })
+                                }
+                                @Html.ValidationMessageFor(model => model.ReqId)
+                            </div>      
+                            <br />
+                        }
+
+                        <div class="w3-group">
+                            @Html.DropDownListFor(model => model.JobId, new SelectList(ViewBag.JobList, "JobID", "JobName"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Job Title</label>
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.JobId)</span>
+                            </div>
+
+
+                        <div>
+                            @Html.DropDownListFor(model => model.DeptId, new SelectList(ViewBag.DeptList, "DeptId", "DeptName"), "Select", new { @class = "form-control" })
+                            <label class="w3-label w3-validate">Department</label>
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.DeptId)</span>
+                        </div>
+                        <br />
+
+                        <div>
+                            @Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.ProductList, "ProductId", "ProductTitle"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Product</label>
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.ProductId)</span>
+                        </div>
+                        <br />
+
+                        <div>
+                            @Html.DropDownListFor(model => model.criticality, (IEnumerable<SelectListItem>)ViewBag.Criticality, "Select", new { id = "ddlLocations", @class = "form-control required" })
+                            <label class="w3-label w3-validate">Criticality</label>
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.criticality)</span>
+                        </div>
+                        <br />
+
+                        <div class="w3-half" hidden>
+                            @Html.EditorFor(model => model.minEstimatedCTC, new { @class = "form-control w3-input w3-container w3-card-4  required" })
+                            <br>
+                            <label class="w3-label w3-validate">Minimum CTC</label>
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.minEstimatedCTC)</span>
+                        </div>
+
+                        <div hidden>
+                            @Html.EditorFor(model => model.EstimatedCTC, new { @class = "form-control w3-input w3-container w3-card-4  required" })
+                            <br>
+                            <label class="w3-label w3-validate">Maximum CTC</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.EstimatedCTC)</span>
+                        </div>
+
+
+
+                        @* @{Model.CreatedByEmpId = ViewBag.MgrId;}
+                            @Html.HiddenFor(model => model.CreatedByEmpId)*@
+                        <div hidden>
+                            @Html.LabelFor(model => model.CreatedByEmpId)
+                            @Html.EditorFor(model => model.CreatedByEmpId, new { text = ViewBag.MgrId })
+                            @Html.Raw(ViewBag.MgrId)
+
+                        </div>
+
+
+                        <div>
+                            @Html.EditorFor(model => model.vacancies,new{@class = "form-control required", required="Required" })
+                            <br>
+                            <label class="w3-label w3-validate">Number of Vacancies</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.vacancies)</span>
+                        </div>
+                        <br />
+
+                        <div>
+                            @Html.EditorFor(model => model.mineducation, new { @class = "required" })
+                            <br>
+                            <label class="w3-label w3-validate">Minimum Education</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.mineducation)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            @Html.EditorFor(model => model.minexperience, new { @class = "required" })
+                            <br>
+                            <label class="w3-label w3-validate">Minimum Experience</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.minexperience)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            <div class="w3-group w3-border">
+                                <label class="w3-label w3-validate">Essential Skills</label>&nbsp;&nbsp;
+				                 <br>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.EssentialSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "nh_multiselect1",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                     
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="nh_multiselect1_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                        <button type="button" id="nh_multiselect1_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                        <button type="button" id="nh_multiselect1_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                        <button type="button" id="nh_multiselect1_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="EssentialIdsSelectedList" id="nh_multiselect1_to" class="form-control" size="8" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="w3-group w3-border">
+
+                                <label class="w3-label w3-validate">Desired Skills</label>&nbsp;&nbsp;
+	                               <div class="row">
+                                       <div class="col-sm-5">
+                                           @Html.DropDownListFor(model => model.DesiredSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "nh_multiselect2",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                          
+                                       </div>
+
+                                       <div class="col-sm-2">
+                                           <button type="button" id="nh_multiselect2_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                           <button type="button" id="nh_multiselect2_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                           <button type="button" id="nh_multiselect2_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                           <button type="button" id="nh_multiselect2_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                                       </div>
+
+                                       <div class="col-sm-5">
+                                           <select name="DesiredIdsSelectedList" id="nh_multiselect2_to" class="form-control" size="8" multiple="multiple"></select>
+                                       </div>
+                                   </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <div class="w3-group w3-border">
+
+                                <label class="w3-label w3-validate">Optional Skills</label>&nbsp;&nbsp;
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.OptionalSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "nh_multiselect3",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                        
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="nh_multiselect3_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                        <button type="button" id="nh_multiselect3_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                        <button type="button" id="nh_multiselect3_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                        <button type="button" id="nh_multiselect3_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="OptionalIdsSelectedList" id="nh_multiselect3_to" class="form-control" size="8" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+
+
+                        <div class="w3-row">
+
+                            @Html.TextAreaFor(model => model.InputComments, new { cols = 50, @rows = 4, @class = "w3-input w3-border" })
+                            <label class="w3-validate w3-label">Comments</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.InputComments)</span>
+                        </div>
+                        <br />
+                        <input class="w3-btn w3-teal" type="submit" value="Submit Request" name="action:NewHire">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="rep" class="w3-container city w3-animate-opacity  w3-half">
+            <h2>Replacement</h2>
+            <div class="w3-row centre">
+                <div class="w3-padding w3-margin-top">
+                    <form class="w3-container w3-card-4" method="post" id="repFormID">
+
+                        @Html.ValidationSummary(true)
+                        <span class='spanMaxCTC' style='color: red'></span>
+
+                        @if (!string.IsNullOrEmpty(ViewBag.Status))
+                        {
+                            <h2>Data saved successfully !</h2>
+                            <script>
+                                //alert('Data saved successfully !'); // place your comment.
+
+                            </script>
+                        }
+
+                        @if (ViewBag.IsSubmitted)
+                        {     
+        
+                            <div class="w3-group">
+                                @Html.LabelFor(model => model.ReqId)
+                                @{
+                            var reqId = (int)ViewBag.reqId;
+                                    @Html.TextBox("ReqId", reqId, new
+                               {
+                                   @readonly = "readonly"
+
+                               })
+                                }
+                                @Html.ValidationMessageFor(model => model.ReqId)
+                            </div>      
+                            <br />
+                        }
+
+                        <div class="w3-group">
+                            @Html.DropDownListFor(model => model.JobId, new SelectList
+
+(ViewBag.JobList, "JobID", "JobName"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Job Title</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.JobTitle)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            @Html.DropDownListFor(model => model.DeptId, new SelectList
+
+(ViewBag.DeptList, "DeptId", "DeptName"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Department</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.DeptName)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            @Html.DropDownListFor(model => model.ProductId, new SelectList
+
+(ViewBag.ProductList, "ProductId", "ProductTitle"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Product Name</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.ProductName)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            @Html.DropDownListFor(model => model.EmpId, new SelectList
+
+(ViewBag.ReplacementFor, "EmpId", "EmpName"), "Select", new { @class = "form-control required" })
+                            <br /><label class="w3-label w3-validate">Replacement For</label>
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.EmpName)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            @Html.DropDownListFor(model => model.criticality, (IEnumerable<SelectListItem>)ViewBag.Criticality, "Select", new { id = "ddlLocations", @class = "form-control required" })
+                            <label class="w3-label w3-validate">Criticality</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.criticality)</span>
+                        </div>
+
+                        <div class="w3-half" hidden>
+                            @Html.EditorFor(model => model.minEstimatedCTC, new { @class = "form-control w3-input w3-container w3-card-4  required" })
+                            <br>
+                            <label class="w3-label w3-validate">Minimum CTC</label>
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.minEstimatedCTC)</span>
+                        </div>
+
+                        <div hidden>
+                            @Html.EditorFor(model => model.EstimatedCTC, new { @class = "form-control w3-input w3-container w3-card-4  required" })
+                            <br>
+                            <label class="w3-label w3-validate">Maximum CTC</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.EstimatedCTC)</span>
+                        </div> 
+
+                        <div class="w3-group" hidden>
+                            @Html.EditorFor(model => model.CreatedByEmpId, new { @class = "required" })
+                            <br>
+                            @Html.LabelFor(model => model.CreatedByEmpId)
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.CreatedByEmpId)</span>
+                        </div>
+
+                        <div class="w3-group" hidden>
+                            @Html.EditorFor(model => model.vacancies, new { @class = "required" })
+                            <br>
+                            <label class="w3-label w3-validate">Number of Vacancies</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.vacancies)</span>
+                        </div>
+
+                        <div>
+                            @Html.EditorFor(model => model.mineducation, new { @class = "required" })
+                            <br />
+                            <label class="w3-label w3-validate">Minimum Education</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.mineducation)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            @Html.EditorFor(model => model.minexperience, new { @class = "required" })
+                            <br />
+                            <label class="w3-label w3-validate">Minimum Experience</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.minexperience)</span>
+                        </div>
+
+                        <div class="w3-group">
+                            <div class="w3-group w3-border">
+                                <label class="w3-label w3-validate">Essential Skills</label>&nbsp;&nbsp;
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.EssentialSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "rp_multiselect1",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                        <span style="color:red">@Html.ValidationMessageFor(model => model.EssentialSkillIds)</span>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="rp_multiselect1_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                        <button type="button" id="rp_multiselect1_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                        <button type="button" id="rp_multiselect1_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                        <button type="button" id="rp_multiselect1_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="EssentialIdsSelectedList" id="rp_multiselect1_to" class="form-control" size="8" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="w3-group w3-border">
+
+                                <label class="w3-label w3-validate">Desired Skills</label>&nbsp;&nbsp;
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.DesiredSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "rp_multiselect2",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                        
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="rp_multiselect2_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                        <button type="button" id="rp_multiselect2_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                        <button type="button" id="rp_multiselect2_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                        <button type="button" id="rp_multiselect2_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="DesiredIdsSelectedList" id="rp_multiselect2_to" class="form-control" size="8" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <div class="w3-group w3-border">
+
+                                <label class="w3-label w3-validate">Optional Skills</label>&nbsp;&nbsp;
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.OptionalSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "rp_multiselect3",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                        
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="rp_multiselect3_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                        <button type="button" id="rp_multiselect3_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                        <button type="button" id="rp_multiselect3_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                        <button type="button" id="rp_multiselect3_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="OptionalIdsSelectedList" id="rp_multiselect3_to" class="form-control" size="8" multiple="multiple"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w3-row">
+
+                            @Html.TextAreaFor(model => model.InputComments, new { cols = 50, @rows = 4, @class = "w3-input w3-border required" })
+                            <label class="w3-validate">Comments</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.InputComments)</span>
+
+                        </div>
+                        <input class="w3-btn w3-teal" type="submit" value="Submit Request" name="action:Replacement">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="inttr" class="w3-container city w3-animate-opacity w3-half">
+            <h2>Internal Hiring</h2>
+            <div class="w3-row">
+                <div class="w3-padding w3-margin-top">
+                    <form class="w3-container w3-card-4" method="post" id="inttrFormID">
+                         @Html.ValidationSummary(true)
+                        <span class='spanMaxCTC' style='color: red'></span>
+
+                        @if (!string.IsNullOrEmpty(ViewBag.Status))
+                        {
+                            <h2>Data saved successfully !</h2>
+                            <script>
+                                //alert('Data saved successfully !'); // place your comment.
+
+                            </script>
+                        }
+
+                        @if (ViewBag.IsSubmitted)
+                        {     
+        
+                            <div class="w3-group">
+                                @Html.LabelFor(model => model.ReqId)
+                                @{
+                            var reqId = (int)ViewBag.reqId;
+                                    @Html.TextBox("ReqId", reqId, new
+                               {
+                                   @readonly = "readonly"
+
+                               })
+                                }
+                                @Html.ValidationMessageFor(model => model.ReqId)
+                            </div>      
+                            <br />
+                        }
+
+                        <div class="w3-group">
+                            @Html.DropDownListFor(model => model.JobId, new SelectList(ViewBag.JobList, "JobID", "JobName"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Job Title</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.JobTitle)</span>
+                        </div>
+
+
+                        <div>
+                            @Html.DropDownListFor(model => model.DeptId, new SelectList(ViewBag.DeptList, "DeptId", "DeptName"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Department Name</label>
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.DeptName)</span>
+                        </div>
+                        <br />
+
+                        <div>
+                            @Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.ProductList, "ProductId", "ProductTitle"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">Product Name</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.ProductName)</span>
+                        </div>
+                        <br />
+
+                        <div>
+                            @Html.DropDownListFor(model => model.criticality, (IEnumerable<SelectListItem>)ViewBag.Criticality, "Select", new { id = "ddlLocations", @class = "form-control required" })
+                            <label class="w3-label w3-validate">Criticality</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.criticality)</span>
+                        </div>
+
+
+                        <br />
+                        <div class="w3-group" hidden>
+                            @Html.LabelFor(model => model.CreatedByEmpId)
+                            @Html.EditorFor(model => model.CreatedByEmpId, new { @class = "required" })
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.CreatedByEmpId)</span>
+                        </div>
+
+                        <div class="w3-group" hidden>
+                            @Html.LabelFor(model => model.vacancies)
+                            @Html.EditorFor(model => model.vacancies, new { @class = "required" })
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.vacancies)</span>
+                        </div>
+
+                        <div class="w3-group" hidden>
+                            @Html.LabelFor(model => model.minexperience)
+                            @Html.EditorFor(model => model.minexperience, new { @class = "required" })
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.minexperience)</span>
+                        </div>
+
+                        <div>
+                            @Html.DropDownListFor(model => model.FromManagerId, new
+
+SelectList(ViewBag.FromManager, "EmpId", "EmpName"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">From Manager</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.FromManagerName)</span>
+                        </div>
+                        <br />
+
+                        <div>
+                            @Html.DropDownListFor(model => model.FromDeptId, new SelectList(ViewBag.DeptList, "DeptId", "DeptName"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">From Department</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.FromDeptName)</span>
+                        </div>
+                        <br />
+
+                        <div>
+                            @Html.DropDownListFor(model => model.FromProductId, new
+
+SelectList(ViewBag.ProductList, "ProductId", "ProductTitle"), "Select", new { @class = "form-control required" })
+                            <label class="w3-label w3-validate">From Product</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.FromProductName)</span>
+                        </div>
+
+
+                        <div hidden>
+                            <label class="w3-label w3-validate">Replacement For</label>
+                            @*@Html.DropDownListFor(model => model.ReplacementFor, new 
+
+SelectList(ViewBag.EmpIds), "Select")*@
+                            @Html.ValidationMessageFor(model => model.ReplacementFor)
+                        </div>
+                        <br />
+
+                         <div class="w3-half" hidden>
+                            @Html.EditorFor(model => model.minEstimatedCTC, new { @class = "form-control w3-input w3-container w3-card-4  required" })
+                            <br>
+                            <label class="w3-label w3-validate">Minimum CTC</label>
+                            <br />
+                            <span style="color:red">@Html.ValidationMessageFor(model => model.minEstimatedCTC)</span>
+                        </div>
+
+                        <div hidden>
+                            @Html.EditorFor(model => model.EstimatedCTC, new { @class = "form-control w3-input w3-container w3-card-4  required" })
+                            <br>
+                            <label class="w3-label w3-validate">Maximum CTC</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.EstimatedCTC)</span>
+                        </div>
+                        <br />
+
+
+
+                        <div class="w3-group">
+                            <div class="w3-group w3-border">
+                                <label class="w3-label w3-validate">Essential Skills</label>&nbsp;&nbsp;
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.EssentialSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "in_multiselect1",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                        
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="in_multiselect1_rightAll"
+                                            class="btn btn-block">
+                                            <i class="glyphicon glyphicon-forward"></i>
+                                        </button>
+                                        <button type="button"
+                                            id="in_multiselect1_rightSelected" class="btn btn-block">
+                                            <i class="glyphicon glyphicon-chevron-right"></i>
+                                        </button>
+                                        <button type="button"
+                                            id="in_multiselect1_leftSelected" class="btn btn-block">
+                                            <i class="glyphicon glyphicon-chevron-left"></i>
+                                        </button>
+                                        <button type="button" id="in_multiselect1_leftAll"
+                                            class="btn btn-block">
+                                            <i class="glyphicon glyphicon-backward"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="EssentialIdsSelectedList"
+                                            id="in_multiselect1_to" class="form-control" size="8" multiple="multiple">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="w3-group w3-border">
+
+                                <label class="w3-label w3-validate">
+                                    Desired 
+
+Skills</label>&nbsp;&nbsp;
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.DesiredSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "in_multiselect2",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                       
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="in_multiselect2_rightAll"
+                                            class="btn btn-block">
+                                            <i class="glyphicon glyphicon-forward"></i>
+                                        </button>
+                                        <button type="button"
+                                            id="in_multiselect2_rightSelected" class="btn btn-block">
+                                            <i class="glyphicon glyphicon-chevron-right"></i>
+                                        </button>
+                                        <button type="button"
+                                            id="in_multiselect2_leftSelected" class="btn btn-block">
+                                            <i class="glyphicon glyphicon-chevron-left"></i>
+                                        </button>
+                                        <button type="button" id="in_multiselect2_leftAll"
+                                            class="btn btn-block">
+                                            <i class="glyphicon glyphicon-backward"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="DesiredIdsSelectedList"
+                                            id="in_multiselect2_to" class="form-control" size="8" multiple="multiple">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div>
+                            <div class="w3-group w3-border">
+
+                                <label class="w3-label w3-validate">Optional Skills</label>&nbsp;&nbsp;
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        @Html.DropDownListFor(model => model.OptionalSkillIds, new SelectList(ViewBag.SkillsList, "SkillId", "SkillName"),
+                                                new
+                                                {
+                                                    @id = "in_multiselect3",
+                                                    @class = "form-control",
+                                                    @size = "8",
+                                                    @multiple = "multiple"
+                                                })
+                                        
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <button type="button" id="in_multiselect3_rightAll"
+                                            class="btn btn-block">
+                                            <i class="glyphicon glyphicon-forward"></i>
+                                        </button>
+                                        <button type="button"
+                                            id="in_multiselect3_rightSelected" class="btn btn-block">
+                                            <i class="glyphicon glyphicon-chevron-right"></i>
+                                        </button>
+                                        <button type="button"
+                                            id="in_multiselect3_leftSelected" class="btn btn-block">
+                                            <i class="glyphicon glyphicon-chevron-left"></i>
+                                        </button>
+                                        <button type="button" id="in_multiselect3_leftAll"
+                                            class="btn btn-block">
+                                            <i class="glyphicon glyphicon-backward"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <select name="OptionalIdsSelectedList"
+                                            id="in_multiselect3_to" class="form-control" size="8" multiple="multiple">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w3-row">
+
+                            @Html.TextAreaFor(model => model.InputComments, new { cols = 50, @rows = 4, @class = "w3-input w3-border required" })
+                            <label class="w3-validate">Comments</label>
+                            <br /><span style="color:red">@Html.ValidationMessageFor(model => model.InputComments)</span>
+
+                        </div>
+
+                        <input class="w3-btn w3-teal" type="submit" value="Submit Request" name="action:InternalHire">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+        <script type="text/javascript" src="/Scripts/multiselect.js"></script>
+        <script type="text/javascript" src="~/Script/multiselect.js"></script>
+        <script type="text/javascript" src="~/Script/multiselect.min.js"></script>
+
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    </div>
+</div>
+
+<script>
+
+    function w3_open() {
+        document.getElementById("mySidenav").style.display = "block";
+    }
+    function w3_close() {
+        document.getElementById("mySidenav").style.display = "none";
+    }
+
+    // Accordions
+    function myAccFunc(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            x.previousElementSibling.className += " w3-dark-grey";
+        }
+
+        else {
+            x.className = x.className.replace(" w3-show", "");
+            x.previousElementSibling.className =
+            x.previousElementSibling.className.replace(" w3-dark-grey", "");
+        }
+    }
+
+    function openCity(evt, cityName) {
+        var i;
+        var x = document.getElementsByClassName("city");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        var activebtn = document.getElementsByClassName("testbtn");
+        for (i = 0; i < x.length; i++) {
+            activebtn[i].className = activebtn[i].className.replace(" w3-dark-grey", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " w3-dark-grey";
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var mybtn = document.getElementsByClassName("testbtn")[0];
+        mybtn.click();
+
+
+        $('#nh_multiselect2').multiselect();
+        $('#nh_multiselect1').multiselect();
+        $('#nh_multiselect3').multiselect();
+
+
+        $('#rp_multiselect1').multiselect();
+        $('#rp_multiselect2').multiselect();
+        $('#rp_multiselect3').multiselect();
+
+
+        $('#in_multiselect1').multiselect();
+        $('#in_multiselect2').multiselect();
+        $('#in_multiselect3').multiselect();
+
+        $('#nh #EstimatedCTC').blur(function () {
+            var n = $("#nh #minEstimatedCTC").val();
+            var m = $("#nh #EstimatedCTC").val();
+
+            if (parseInt(n) > parseInt(m)) {
+                $('#nh .spanMaxCTC').text("Max CTC cannot be less than Min CTC!");
+                $("#nh #EstimatedCTC").val("");
+                $("#nh #EstimatedCTC").focus();
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            }
+            else { $('#nh .spanMaxCTC').text(""); }
+        });
+
+        $('#rep #EstimatedCTC').blur(function () {
+            var n = $("#rep #minEstimatedCTC").val();
+            var m = $("#rep #EstimatedCTC").val();
+
+            if (parseInt(n) > parseInt(m)) {
+                $('#rep .spanMaxCTC').text("Max CTC cannot be less than Min CTC!");
+                $("#rep #EstimatedCTC").val("");
+                $("#rep #EstimatedCTC").focus();
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            }
+            else { $('#rep .spanMaxCTC').text(""); }
+        });
+
+        $('#inttr #EstimatedCTC').blur(function () {
+            var n = $("#inttr #minEstimatedCTC").val();
+            var m = $("#inttr #EstimatedCTC").val();
+
+            if (parseInt(n) > parseInt(m)) {
+                $('#inttr .spanMaxCTC').text("Max CTC cannot be less than Min CTC!");
+                $("#inttr #EstimatedCTC").val("");
+                $("#inttr #EstimatedCTC").focus();
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            }
+            else { $('#inttr .spanMaxCTC').text(""); }
+        });
+    });
+
+    $("#nhFormID").submit(function (event) {
+
+        if ($('#nh_multiselect1_to option').length == 0 || $('#nh_multiselect2_to option').length == 0 || $('#nh_multiselect3_to option').length == 0) {
+            $('#nh .spanMaxCTC').text("Essential/Desired/Optional Skills must have atleast one value selected!");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            event.preventDefault();
+        }
+
+        else { $('#nh .spanMaxCTC').text(""); }
+    });
+
+    $("#repFormID").submit(function (event) {
+
+        if ($('#rp_multiselect1_to option').length == 0 || $('#rp_multiselect2_to option').length == 0 || $('#rp_multiselect3_to option').length == 0) {
+            $('#rep .spanMaxCTC').text("Essential/Desired/Optional Skills must have atleast one value selected!");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            event.preventDefault();
+        }
+
+        else { $('#rep .spanMaxCTC').text(""); }
+    });
+
+    $("#inttrFormID").submit(function (event) {
+
+        if ($('#in_multiselect1_to option').length == 0 || $('#in_multiselect2_to option').length == 0 || $('#in_multiselect3_to option').length == 0) {
+            $('#inttr .spanMaxCTC').text("Essential/Desired/Optional Skills must have atleast one value selected!");
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            event.preventDefault();
+        }
+
+        else { $('#inttr .spanMaxCTC').text(""); }
+    });
+
+
+</script>

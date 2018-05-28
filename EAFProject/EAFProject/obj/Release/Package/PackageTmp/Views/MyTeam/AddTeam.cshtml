@@ -1,0 +1,265 @@
+﻿@model EAFProject.Models.EmployeeClass
+@{
+    ViewBag.Title = "AddTeam";
+}
+<!DOCTYPE html>
+<html>
+<link href="~/Styles/style.css" rel="stylesheet"/>
+<link href="~/Styles/W3.css" rel="stylesheet"/>
+<link href="~/Styles/JQueryUi.css" rel="stylesheet"/>
+<link href="~/Styles/FontAwesomeMin.css" rel="stylesheet"/>
+<body>
+<nav class="w3-sidenav w3-white w3-card-2" style="display:none" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()"
+  class="w3-closenav w3-large">Menu</a>
+     @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "MyTeam")'">My Team</a>
+     }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "HR")
+    {
+        <a onclick="location.href='@Url.Action("HRRequest", "DisplayHRRequests")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("Index", "DisplayRequest")'">My Requests</a>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+ <div class="w3-accordion">
+    <a onclick="location.href='@Url.Action("NewHire", "CreateRequest")'">Raise a Request </a>
+    </div>
+    }
+    @if (System.Web.HttpContext.Current.Session["role"].ToString() == "Manager")
+    {
+  <a onclick="location.href='@Url.Action("PendingResult", "DisplayPending")'">Pending</a>
+    }
+</nav>
+
+<header class="w3-container w3-teal">
+  <span class="w3-opennav w3-xlarge" onclick="w3_open()">&#9776;</span>
+  <h1>Add Team</h1>
+</header>
+
+@if (!string.IsNullOrEmpty(ViewBag.Status))
+{
+    <h2>Added Successfully</h2>
+}
+  <div class="w3-row">
+<div class="w3-half w3-padding w3-margin-top">
+<form class="w3-container w3-card-4" method="post" id="form_id">
+
+     <div class="w3-group">
+         @Html.TextBoxFor(model => model.swg,new {id="swg", @class="w3-input required"})
+         <label class="w3-label w3-validate">SWG Id<span style="color:red">*<br />@Html.ValidationMessageFor(model => model.swg)</span></label>
+		</div>
+  
+    
+    <div class="w3-group">
+        @Html.TextBoxFor(model => model.name,new {@class="w3-input required",maxlength = "50"})
+        
+    <label class="w3-label w3-validate">Name<span style="color:red">*<br />@Html.ValidationMessageFor(model => model.name)</span></label>
+		
+ </div>
+    <div class="w3-group">
+        @Html.TextBoxFor(model => model.email,new {@class="w3-input required email"})
+    <label class="w3-label w3-validate">Email Id<span style="color:red">*<br />@Html.ValidationMessageFor(model => model.email)</span></label>
+	</div>
+
+<div class="w3-group">
+    
+		@Html.DropDownListFor(model => model.jobId, new SelectList(ViewBag.JobList, "JobID", "JobName"), "Select", new { @class="w3-select required"})
+    <label class="w3-label w3-validate">Job Title<span style="color:red">*<br />@Html.ValidationMessageFor(model => model.jobId)</span></label>
+</div>
+<div class="w3-group">
+    
+		@Html.DropDownListFor(model => model.ProductId, new SelectList(ViewBag.ProductList,"ProductId", "ProductTitle"), "Select",new { @class="w3-select required"})
+    <label class="w3-label w3-validate">Product<span style="color:red">*<br />@Html.ValidationMessageFor(model => model.ProductId)</span></label>
+</div> 
+<div class="w3-group">
+    
+		@Html.DropDownListFor(model => model.DeptId, new SelectList(ViewBag.DeptList,"DeptId", "DeptName"), "Select",new { @class="w3-select required"})
+    <label class="w3-label w3-validate">Department<span style="color:red">*<br />@Html.ValidationMessageFor(model => model.DeptId)</span></label>
+</div>
+
+<div class="w3-group">
+     @Html.TextBoxFor(model => model.dateOfJoining, new { @class = "form-control doj w3-input required" })
+    <label class="w3-label w3-validate">Date of joining<span style="color:red">*<br />@Html.ValidationMessageFor(model => model.dateOfJoining)</span></label>
+</div>
+
+<div class="w3-group">
+    
+     @Html.TextBoxFor(model => model.dateOfOffer, new { @class = "form-control doo w3-input" })
+    <label class="w3-label w3-validate">Date of Offer</label>
+
+</div>
+    
+ @*<div class="w3-group">
+    
+     @Html.TextBoxFor(model => model.dateOfResignation, new { @class = "form-control dor w3-input" })
+     <label class="w3-label w3-validate">Date of Resignation</label>
+
+</div>   
+    
+  <div class="w3-group">
+  
+     @Html.TextBoxFor(model => model.lastDay, new { @class = "form-control dol w3-input" })
+      <label class="w3-label w3-validate">Last day</label>
+
+</div> *@    
+ 
+
+    <button class="w3-btn-block w3-teal">Submit</button>
+    @*<input type="submit" name="action:AddTeam" value="submit" style="display:none;"/>*@
+</form>
+    </div>
+      </div>
+ <!--<footer class="w3-container w3-teal">
+ 
+</footer> -->
+    
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+  <script>
+      $(function () {
+          var dateToday = new Date();
+          $(".doj").datepicker({
+              changeMonth: true,
+              changeYear: true,
+          });
+
+
+
+          $(".dor").datepicker({
+              changeMonth: true,
+              changeYear: true
+          });
+
+
+
+          $(".doo").datepicker({
+              changeMonth: true,
+              changeYear: true
+          });
+
+
+
+          $(".dol").datepicker({
+              changeMonth: true,
+              changeYear: true
+          });
+
+          $("button").click(function () {
+
+              var mandatoryfilled = true;
+              $(".required").each(function () {
+
+                  if ($(this).val() == "") {
+                      alert("Please fill mandatory fields");
+                      mandatoryfilled = false;
+                      return false;
+                  }
+              });
+              if (!mandatoryfilled) {
+
+                  return false;
+              } else {
+                  if (!isValidEmailAddress($(".email").val())) { alert("Please enter valid email address"); return false; }
+
+                  //$.ajax({
+                  //    method: "GET",
+                  //    url: "CheckTeamMember",
+                  //    data: { swg: $("#swg").val() }
+                  //}).success(function (data) {
+                  //    if (data == null || data == "") {
+                  //        //submit
+                  //        // $("#form_id").attr('validated', true);
+                  //        $("#form_id").submit();
+                  //    } else {
+                  //        var confirmation = confirm("The SWG id " + $("#swg").val() + " already exists under manager " + data + " \n" +
+                  //             "Click OK if you wish to update the current manager of this SWG id to you. \n" +
+                  //             "Click Cancel if you want to change the SWG Id.");
+
+                  //        if (confirmation == true) {
+
+                  //            $("#form_id").submit();
+                  //        }
+                  //        else {
+                  //            $("#form_id").attr('validated', true);
+                  //        }
+                  //    }
+                  //});
+
+                  //return false;
+              }
+          });
+
+
+
+          $('#swg').blur(function () {
+              $.ajax({
+                  method: "GET",
+                  url: "CheckTeamMember",
+                  data: { swg: $("#swg").val() }
+              }).success(function (data) {
+                  if (data == null || data == "") {
+                      //submit
+                      // $("#form_id").attr('validated', true);
+                      $("#form_id").submit();
+                  } else {
+                      var confirmation = confirm("The SWG id " + $("#swg").val() + " already exists under manager " + data + " \n" +
+                           "Click OK if you wish to update the current manager of this SWG id to you. \n" +
+                           "Click Cancel if you want to change the SWG Id.");
+
+                      if (confirmation == true) {
+
+                          $("#form_id").submit();
+                      }
+                      else {
+                          $("#form_id").attr('validated', true);
+                      }
+                  }
+              });
+
+          });
+
+      });
+  </script>
+  
+<script>
+
+    function checkTeamMember(data) {
+        alert(data);
+    }
+    function w3_open() {
+        document.getElementById("mySidenav").style.display = "block";
+    }
+    function w3_close() {
+        document.getElementById("mySidenav").style.display = "none";
+    }
+
+    // Accordions
+    function myAccFunc(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            x.previousElementSibling.className += " w3-dark-grey";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+            x.previousElementSibling.className =
+            x.previousElementSibling.className.replace(" w3-dark-grey", "");
+        }
+    }
+
+    function isValidEmailAddress(emailAddress) {
+        var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+        return emailReg.test(emailAddress);
+    }
+
+</script>
+
+
+    </body>
+</html>
